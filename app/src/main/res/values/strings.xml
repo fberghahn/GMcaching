@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">GMcaching</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="cache1">I am strong.</string>
-    <string name="cache2">I believe in myself.</string>
-    <string name="cache3">I am strong with you.</string>
-    <string name="cache4">I believe in us.</string>
+    <string name="cache1">1. Baumstumpf</string>
+    <string name="cache2">2. Gps Suche</string>
+    <string name="cache3">3. Gefunden dank GMcaching</string>
+    <string name="cache4">4. Beispiel</string>
 </resources>
