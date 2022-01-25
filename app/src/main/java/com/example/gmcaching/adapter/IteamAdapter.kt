@@ -32,11 +32,11 @@ class ItemAdapter(private val context: Context, private val dataset: List<Cache>
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
         holder.imageView.setOnClickListener{
-            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2(latlng = item.location.toString())
+            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsFragment(lat = item.location.latitude.toString(), lng = item.location.longitude.toString(), item.stringResourceId.toString() )
             holder.view.findNavController().navigate(action)
         }
         holder.button.setOnClickListener{
-            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2(latlng = item.location.toString())
+            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsFragment(lat = item.location.latitude.toString(), lng = item.location.longitude.toString(), item.stringResourceId.toString() )
             holder.view.findNavController().navigate(action)
         }
     }
