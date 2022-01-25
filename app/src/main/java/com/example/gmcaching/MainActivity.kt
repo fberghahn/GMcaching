@@ -23,17 +23,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-      //val button = findViewById(R.id.button1) as Button
-
-//    button.setOnClickListener(object : View.OnClickListener {
-//        override fun onClick(view: View?) {
-//            // Toast.makeText(this@MainActivity, "Viel Erfolg bei der Suche", Toast.LENGTH_SHORT).show() //Toast zum Klick auf den Cache
-//            val intent = Intent(this@MainActivity, MapsActivity::class.java)
-//            startActivity(intent)
-//        }
-    //}
-    //)
 }
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

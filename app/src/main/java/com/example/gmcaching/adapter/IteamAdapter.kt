@@ -10,9 +10,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gmcaching.CachesListFragmentDirections
 import com.example.gmcaching.R
-import com.example.gmcaching.model.cachenames
+import com.example.gmcaching.model.Cache
 
-class ItemAdapter(private val context: Context, private val dataset: List<cachenames>): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(private val context: Context, private val dataset: List<Cache>): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val button = view.findViewById<Button>(R.id.button1)
         val textView: TextView = view.findViewById(R.id.item_title)
@@ -31,8 +31,12 @@ class ItemAdapter(private val context: Context, private val dataset: List<cachen
         val item = dataset[position]
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
+        holder.imageView.setOnClickListener{
+            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2(latlng = item.location.toString())
+            holder.view.findNavController().navigate(action)
+        }
         holder.button.setOnClickListener{
-            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2()
+            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2(latlng = item.location.toString())
             holder.view.findNavController().navigate(action)
         }
     }
