@@ -35,6 +35,10 @@ class ItemAdapter(private val context: Context, private val dataset: List<cachen
             val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2()
             holder.view.findNavController().navigate(action)
         }
+        holder.imageView.setOnClickListener{
+            val action = CachesListFragmentDirections.actionCachesListFragmentToMapsActivity2()
+            holder.view.findNavController().navigate(action)
+        }
     }
 
 
