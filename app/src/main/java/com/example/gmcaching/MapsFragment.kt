@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import com.example.gmcaching.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -28,6 +29,7 @@ class MapsFragment : Fragment() {
     private lateinit var cacheLocation : LatLng
     private lateinit var title : String
 
+
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -42,6 +44,7 @@ class MapsFragment : Fragment() {
             cacheLocation = LatLng(it.getString("lat")!!.toDouble(),it.getString("lng")!!.toDouble())
             title=it.getString("title").toString()
         }
+        title= context?.resources?.getString(title.toInt()).toString()
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
         val location = cacheLocation

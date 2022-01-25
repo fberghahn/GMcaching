@@ -24,8 +24,9 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.gmcaching.MapsFragment"
-        android:label="MapsFragment" >
-        <argument android:name="lat"
+        android:label="@string/cache_list_fragment_label">
+        <argument
+            android:name="lat"
             app:argType="string" />
         <argument
             android:name="lng"
