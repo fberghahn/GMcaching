@@ -14,7 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="194dp"
             android:importantForAccessibility="no"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:clickable="true"
+            android:focusable="true"
+            />
 
         <TextView
             android:id="@+id/item_title"
@@ -22,6 +25,12 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textAppearance="?attr/textAppearanceHeadline6" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Anzeigen" />
 
     </LinearLayout>
 
