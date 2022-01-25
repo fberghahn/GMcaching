@@ -9,9 +9,6 @@
         android:id="@+id/cachesListFragment"
         android:name="com.example.gmcaching.CachesListFragment"
         android:label="@string/app_name">
-        <argument
-            android:name="Cache"
-            app:argType="string" />
         <action
             android:id="@+id/action_cachesListFragment_to_mapsActivity2"
             app:destination="@id/mapsActivity" />
@@ -20,5 +17,8 @@
         android:id="@+id/mapsActivity"
         android:name="com.example.gmcaching.MapsActivity"
         android:label="@string/app_name"
-        tools:layout="@layout/activity_maps" />
+        tools:layout="@layout/activity_maps" >
+        <argument android:name="latlng"
+            app:argType="string" />
+    </activity>
 </navigation>
