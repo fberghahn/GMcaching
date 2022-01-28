@@ -2,6 +2,7 @@ package com.example.gmcaching
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import androidx.fragment.app.Fragment
 
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -41,18 +44,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
-
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mapFragment  = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
+        mapFragment  = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
         mapFragment.getMapAsync(this)
     }
@@ -70,6 +69,30 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
         mMap = p0
         mMap.uiSettings.isZoomControlsEnabled = true
 //        mMap.setOnMarkerClickListener(this)
+
+        setupMap()
+
+
+
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+    private fun setMarker(){
+        val circleOptions = circlePrep()
+
+
+        mMap.addMarker(MarkerOptions().position(cacheLocation).title(title))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(cacheLocation))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cacheLocation, 13f))
+        mMap.addCircle(circleOptions)
+
+    }
+
+    private fun setupMap(){
 
         if (ActivityCompat.checkSelfPermission(
                 this.requireContext(),
@@ -89,15 +112,16 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
 
             }
         }
-
-
-        mMap.addMarker(MarkerOptions().position(cacheLocation).title(title))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(cacheLocation))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cacheLocation, 13f))
+        setMarker()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    private fun circlePrep(): CircleOptions{
+        val circleOptions :CircleOptions = CircleOptions()
+        circleOptions.center(cacheLocation)
+        circleOptions.radius(40.0)
+        circleOptions.visible(true)
+        circleOptions.fillColor(0x8080ff80.toInt())
+        circleOptions.strokeColor(0x8080ff80.toInt())
+        return circleOptions
     }
 }
