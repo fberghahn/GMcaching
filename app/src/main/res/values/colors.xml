@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="emerald_green">#01573A</color>
     <color name="darker_green">#012A21</color>
+    <color name="buttonLabel">#FFFFFF</color>
+
 
 </resources>

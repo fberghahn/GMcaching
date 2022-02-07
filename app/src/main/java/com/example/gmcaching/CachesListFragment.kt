@@ -19,7 +19,7 @@ class CachesListFragment : Fragment() {
         fun newInstance() = CachesListFragment()
     }
 
-    private lateinit var viewModel: CachesListViewModel
+    //private lateinit var viewModel: CachesListViewModel
     private var _binding: CachesListFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
