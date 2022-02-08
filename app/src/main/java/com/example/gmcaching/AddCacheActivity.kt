@@ -28,7 +28,7 @@ class AddCacheActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val name = editWordView.text.toString()
-                //val koordinaten = editKoordinatenView.text.toString()
+//                val koordinaten = editKoordinatenView.text.toString()
                 replyIntent.putExtra(EXTRA_REPLY, name)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
@@ -40,3 +40,4 @@ class AddCacheActivity : AppCompatActivity() {
         const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"
     }
 }
+
