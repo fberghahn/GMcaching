@@ -82,7 +82,7 @@ class DatabaseFragment : Fragment() {
                 newLng=it.getString("lng")!!.toDouble()
                 newTitle=it.getString("name").toString()
             }
-            val item = Item(cacheName = newTitle, lat = newLat, lng = newLng, suchcounter = 3)
+            val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
             itemViewModel.insert(item)
 
         } else {

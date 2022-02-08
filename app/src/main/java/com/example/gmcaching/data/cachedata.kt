@@ -13,8 +13,6 @@ data class Item(
     @ColumnInfo(name = "koordinaten: lat")
     val lat: Double,
     @ColumnInfo(name = "koordinaten: lng")
-    val lng: Double,
-    @ColumnInfo(name = "suchcounter")
-    val suchcounter: Int,
+    val lng: Double
 
     )

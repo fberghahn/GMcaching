@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(Item::class), version = 2, exportSchema = false)
+@Database(entities = arrayOf(Item::class), version = 3, exportSchema = false)
 public abstract class ItemRoomDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
@@ -34,9 +34,9 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
 
 
             // Add sample words.
-            var name = Item(1,"Test1",4.4,1.2, 1)
+            var name = Item(1,"Test1",4.4,1.2)
             itemDao.insert(name)
-            name = Item(1,"Test2",5.4,2.0 , 2)
+            name = Item(1,"Test2",5.4,2.0 )
             itemDao.insert(name)
 
 
