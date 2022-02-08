@@ -19,4 +19,8 @@ class ItemRepository(private val itemDao: ItemDao) {
     suspend fun insert(item: Item) {
         itemDao.insert(item)
     }
+    @WorkerThread
+    suspend fun deleteAll() {
+        itemDao.deleteAll()
+    }
 }

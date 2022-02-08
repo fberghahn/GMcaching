@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GMcaching</string>
-    <string name="cache_list_fragment_label">cache</string>
+    <string name="cache_list_fragment_label">Cache: {title}</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="cache1">1. Baumstumpf</string>
     <string name="cache2">2. Gps Suche</string>
@@ -12,5 +12,6 @@
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -7,11 +7,13 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "item_table")
 data class Item(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int =0 ,
     @ColumnInfo(name = "name")
     val cacheName: String,
-    @ColumnInfo(name = "koordinaten")
-    val koordinaten: Double,
+    @ColumnInfo(name = "koordinaten: lat")
+    val lat: Double,
+    @ColumnInfo(name = "koordinaten: lng")
+    val lng: Double,
     @ColumnInfo(name = "suchcounter")
     val suchcounter: Int,
 

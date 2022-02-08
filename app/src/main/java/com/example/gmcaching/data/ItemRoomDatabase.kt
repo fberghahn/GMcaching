@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(Item::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Item::class), version = 2, exportSchema = false)
 public abstract class ItemRoomDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
@@ -23,6 +23,7 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populateDatabase(database.itemDao())
+
                 }
             }
         }
@@ -31,11 +32,13 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
             // Delete all content here.
             itemDao.deleteAll()
 
+
             // Add sample words.
-            var name = Item(1,"Test1",4.4,1)
+            var name = Item(1,"Test1",4.4,1.2, 1)
             itemDao.insert(name)
-            name = Item(1,"Test2",5.4,2)
+            name = Item(1,"Test2",5.4,2.0 , 2)
             itemDao.insert(name)
+
 
             // TODO: Add your own words!
         }
@@ -56,8 +59,8 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
                     ItemRoomDatabase::class.java,
                     "item_database"
                 )
-                    .addCallback(ItemDatabaseCallback(scope))
-                    .build()
+                    .addCallback(ItemDatabaseCallback(scope)).
+                fallbackToDestructiveMigration().build() //Datenbank wird gelöscht wenn wir anzeigen ändern
                 INSTANCE = instance
                 // return instance
                 instance

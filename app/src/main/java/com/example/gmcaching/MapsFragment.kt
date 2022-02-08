@@ -29,12 +29,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityMapsBinding
     private lateinit var lastLocation: Location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var cacheLocation : LatLng
     private lateinit var title : String
-    private lateinit var supportMapFragment : SupportMapFragment
     private lateinit var mapFragment : SupportMapFragment
 
 

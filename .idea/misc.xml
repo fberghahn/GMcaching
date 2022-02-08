@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/activity_add_cache.xml" value="0.3307291666666667" />
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/activity_database.xml" value="0.39855072463768115" />
         <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/activity_main.xml" value="0.30520833333333336" />
         <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/activity_maps.xml" value="0.3307291666666667" />
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/add_cache_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/buttons.xml" value="0.483695652173913" />
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/caches_list_fragment.xml" value="0.2695035460992908" />
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/database_fragment.xml" value="0.3307291666666667" />
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/fragment_database.xml" value="0.39855072463768115" />
         <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/fragment_maps.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/list_item.xml" value="0.3307291666666667" />
+        <entry key="..\:/Users/Reakt/Desktop/TH Stuff/Mobile Computing/GMCaching/GMcaching/app/src/main/res/layout/recyclerview_item.xml" value="0.39855072463768115" />
         <entry key="..\:/Users/flori/Documents/Studium/Mobile Computing/GMcaching/app/src/main/res/layout/activity_add_cache.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/flori/Documents/Studium/Mobile Computing/GMcaching/app/src/main/res/layout/activity_database.xml" value="0.19427083333333334" />
         <entry key="..\:/Users/flori/Documents/Studium/Mobile Computing/GMcaching/app/src/main/res/layout/activity_main.xml" value="0.2028985507246377" />
