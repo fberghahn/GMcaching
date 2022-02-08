@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/cachesListFragment">
+    app:startDestination="@id/databaseFragment">
 
     <fragment
         android:id="@+id/cachesListFragment"
@@ -34,5 +34,39 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_mapsFragment_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCacheFragment"
+        android:name="com.example.gmcaching.AddCacheFragment"
+        android:label="add_cache_fragment"
+        tools:layout="@layout/add_cache_fragment" >
+        <action
+            android:id="@+id/action_addCacheFragment_to_databaseFragment"
+            app:destination="@id/databaseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/databaseFragment"
+        android:name="com.example.gmcaching.DatabaseFragment"
+        android:label="database_fragment"
+        tools:layout="@layout/database_fragment" >
+        <action
+            android:id="@+id/action_databaseFragment_to_addCacheFragment"
+            app:destination="@id/addCacheFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="lat"
+            app:argType="string" />
+        <argument
+            android:name="lng"
+            app:argType="string" />
+        <argument
+            android:name="text_is_ready"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>
