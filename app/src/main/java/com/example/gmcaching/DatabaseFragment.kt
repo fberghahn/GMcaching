@@ -1,13 +1,17 @@
 package com.example.gmcaching
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -18,6 +22,8 @@ import com.example.gmcaching.adapter.ItemListAdapter
 import com.example.gmcaching.data.Item
 import com.example.gmcaching.databinding.DatabaseFragmentBinding
 import com.example.gmcaching.model.Cache
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 
 
@@ -36,6 +42,8 @@ class DatabaseFragment : Fragment() {
     private  var newLat: Double =0.0
     private  var newLng: Double =0.0
     private lateinit var newTitle: String
+    private  lateinit var newLocation : LatLng
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +66,8 @@ class DatabaseFragment : Fragment() {
         val adapter = ItemListAdapter()
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
+     updateLocation()
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
@@ -77,9 +86,10 @@ class DatabaseFragment : Fragment() {
 
     private fun handleData() {
         if (arguments?.let { it.getBoolean("text_is_ready")} == true) {
+            updateLocation()
             arguments?.let {
-                newLat = it.getString("lat")!!.toDouble()
-                newLng=it.getString("lng")!!.toDouble()
+                newLat = newLocation.latitude
+                newLng=newLocation.longitude
                 newTitle=it.getString("name").toString()
             }
             val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
@@ -94,5 +104,18 @@ class DatabaseFragment : Fragment() {
         }
     }
 
+    private fun updateLocation(){
+
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                newLocation = LatLng(location.latitude,location.longitude)
+                return@addOnSuccessListener
+
+            }
+
+        }
+        newLocation=LatLng(1.0,1.0)
+    }
 
 }

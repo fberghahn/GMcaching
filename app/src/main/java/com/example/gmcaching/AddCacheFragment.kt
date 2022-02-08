@@ -58,7 +58,7 @@ class AddCacheFragment : Fragment() {
     }
 
     private fun textfieldsAreFilled(): Boolean {
-        return TextUtils.isEmpty(binding.editName.text)||TextUtils.isEmpty(binding.editKoordinaten.text)
+        return TextUtils.isEmpty(binding.editName.text)
 
     }
 
