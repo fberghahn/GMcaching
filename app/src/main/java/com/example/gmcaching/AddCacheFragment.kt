@@ -98,7 +98,7 @@ class AddCacheFragment : Fragment() {
         }
     }
 
-
+//drei
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED&&
             ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
