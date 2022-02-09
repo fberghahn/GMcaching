@@ -98,6 +98,7 @@ class AddCacheFragment : Fragment() {
         }
     }
 
+
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED&&
             ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
@@ -136,8 +137,8 @@ class AddCacheFragment : Fragment() {
                             super.onLocationResult(locationResult)
 
                             val location : Location = locationResult.lastLocation
-                            newLat=location.latitude
-                            newLng=location.longitude
+                            newLat=locationResult.lastLocation.latitude
+                            newLng=locationResult.lastLocation.longitude
 
 
                         }
