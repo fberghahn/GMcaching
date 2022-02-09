@@ -22,7 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.gmcaching.databinding.AddCacheFragmentBinding
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 
 
@@ -64,14 +63,32 @@ class AddCacheFragment : Fragment() {
         updateLocation()
 
         binding.buttonSave.setOnClickListener {
-            if (textfieldsAreFilled()) {
+            if (newLat==0.0 || newLng==0.0){
+                Toast.makeText(
+                    this.requireContext(),
+                    R.string.locationError,
+                    Toast.LENGTH_SHORT
+                ).show()}
+            else if (textfieldsAreEmpty()){
+                Toast.makeText(
+                    this.requireContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            if (textfieldsAreEmpty()) {
+
+
                 val action = AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment(
-                    null.toString(), "0.0","0.0",  false
+                    null.toString(), "0.0", "0.0", false
                 )
                 findNavController().navigate(action)
             } else {
+
                 val action = AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment(
-                    binding.editName.text.toString(), newLat.toString(), newLng.toString() ,true)
+                    binding.editName.text.toString(), newLat.toString(), newLng.toString(), true
+                )
                 findNavController().navigate(action)
 
 
@@ -96,9 +113,10 @@ class AddCacheFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
         }
+
     }
 
-//drei
+
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED&&
             ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
@@ -111,7 +129,7 @@ class AddCacheFragment : Fragment() {
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 10001)
             Toast.makeText(
                 this.requireContext(),
-                R.string.empty_not_saved,
+                R.string.needGpsHint,
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -148,20 +166,20 @@ class AddCacheFragment : Fragment() {
             })
         }
         else{
+            Toast.makeText(
+                this.requireContext(),
+                R.string.needGpsHint,
+                Toast.LENGTH_SHORT
+            ).show()
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+
         }
-//        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-//            if (location != null) {
-//                newLat=location.latitude
-//                newLng=location.longitude
-//
-//            }
-//
-//        }
+
+
 
     }
 
-    private fun textfieldsAreFilled(): Boolean {
+    private fun textfieldsAreEmpty(): Boolean {
         return TextUtils.isEmpty(binding.editName.text)
 
     }

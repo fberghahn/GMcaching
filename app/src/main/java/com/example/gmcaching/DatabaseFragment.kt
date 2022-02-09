@@ -129,12 +129,6 @@ class DatabaseFragment : Fragment() {
             itemViewModel.insert(item)
                 }
 
-        } else {
-            Toast.makeText(
-                this.requireContext(),
-                R.string.empty_not_saved,
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
 

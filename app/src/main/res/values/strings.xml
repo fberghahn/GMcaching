@@ -12,6 +12,7 @@
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="locationError">Word not saved because of Location Error</string>
+    <string name="needGpsHint">Gps wird zum Erstellen benötigt</string>
     <string name="add_word">Add word</string>
 <!-- TODO: Remove or change this placeholder text -->
 =======
