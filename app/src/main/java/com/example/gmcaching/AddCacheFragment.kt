@@ -53,12 +53,13 @@ class AddCacheFragment : Fragment() {
     ): View? {
         _binding = AddCacheFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireContext())
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
+
         checkPermissions()
         updateLocation()
 
@@ -122,14 +123,9 @@ class AddCacheFragment : Fragment() {
         if (locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationmanager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER))
         {
+            fusedLocationClient.flushLocations()
             fusedLocationClient.lastLocation.addOnCompleteListener(OnCompleteListener { task ->
-                val location: Location =task.getResult()
-                if (location!=null)
-                {   newLat= location.latitude
-                    newLng=location.longitude
-                }
-                else
-                {
+
                     val locationRequest : LocationRequest = LocationRequest().
                     setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                         .setInterval(10000)
@@ -147,7 +143,7 @@ class AddCacheFragment : Fragment() {
                         }
                     }
                     fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper()!!)
-                }
+
             })
         }
         else{
