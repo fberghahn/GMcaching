@@ -60,10 +60,12 @@
             app:argType="string" />
         <argument
             android:name="lat"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="0" />
         <argument
             android:name="lng"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="0" />
         <argument
             android:name="text_is_ready"
             app:argType="boolean"

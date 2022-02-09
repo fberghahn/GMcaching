@@ -1,6 +1,7 @@
 package com.example.gmcaching
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
@@ -90,6 +91,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
 
     }
 
+    @SuppressLint("MissingPermission")
     private fun setupMap(){
 
         if (ActivityCompat.checkSelfPermission(
@@ -121,5 +123,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
         circleOptions.fillColor(0x8080ff80.toInt())
         circleOptions.strokeColor(0x8080ff80.toInt())
         return circleOptions
+    }
+    public fun getlastLocation(): Location {
+        return lastLocation
     }
 }
