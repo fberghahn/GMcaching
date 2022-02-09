@@ -53,12 +53,13 @@ class AddCacheFragment : Fragment() {
     ): View? {
         _binding = AddCacheFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireContext())
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
+
         checkPermissions()
         updateLocation()
 
@@ -97,6 +98,7 @@ class AddCacheFragment : Fragment() {
         }
     }
 
+
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED&&
             ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
@@ -123,13 +125,7 @@ class AddCacheFragment : Fragment() {
                 LocationManager.NETWORK_PROVIDER))
         {
             fusedLocationClient.lastLocation.addOnCompleteListener(OnCompleteListener { task ->
-                val location: Location =task.getResult()
-                if (location!=null)
-                {   newLat= location.latitude
-                    newLng=location.longitude
-                }
-                else
-                {
+
                     val locationRequest : LocationRequest = LocationRequest().
                     setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                         .setInterval(10000)
@@ -140,14 +136,14 @@ class AddCacheFragment : Fragment() {
                             super.onLocationResult(locationResult)
 
                             val location : Location = locationResult.lastLocation
-                            newLat=location.latitude
-                            newLng=location.longitude
+                            newLat=locationResult.lastLocation.latitude
+                            newLng=locationResult.lastLocation.longitude
 
 
                         }
                     }
                     fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper()!!)
-                }
+
             })
         }
         else{
