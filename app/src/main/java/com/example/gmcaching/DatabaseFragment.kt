@@ -58,8 +58,7 @@ class DatabaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         myDataset=itemViewModel.allItems
-        val itemAdapter = ItemAdapter(this.requireContext(),myDataset)
-        val adapter = ItemListAdapter()
+        val adapter = ItemListAdapter(this.requireContext(),myDataset)
         recyclerView = binding.recyclerview
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
@@ -70,7 +69,7 @@ class DatabaseFragment : Fragment() {
             // Update the cached copy of the words in the adapter.
             Items.let { adapter.submitList(it) }
 
-            recyclerView.adapter=itemAdapter //Funktioniert Unerklärlicher Weise
+
         }
 
         handleData()
@@ -78,7 +77,7 @@ class DatabaseFragment : Fragment() {
             val action = DatabaseFragmentDirections.actionDatabaseFragmentToAddCacheFragment()
             findNavController().navigate(action)
         }
-//       recyclerView.adapter=itemAdapter //Während das Bugged
+
     }
 
 
