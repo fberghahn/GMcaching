@@ -36,7 +36,7 @@ class AddCacheFragment : Fragment() {
 
     private var newLat :Double =0.0
     private var newLng :Double =0.0
-    private lateinit var title : String
+    private val newCacheActivityRequestCode = 10001
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
@@ -63,7 +63,7 @@ class AddCacheFragment : Fragment() {
         updateLocation()
 
         binding.buttonSave.setOnClickListener {
-            if (newLat==0.0 || newLng==0.0){
+            if (newLat==0.0 && newLng==0.0){
                 Toast.makeText(
                     this.requireContext(),
                     R.string.locationError,
@@ -77,7 +77,7 @@ class AddCacheFragment : Fragment() {
                 ).show()
             }
 
-            if (textfieldsAreEmpty()) {
+            if (textfieldsAreEmpty()||newLat==0.0 && newLng==0.0) {
 
 
                 val action = AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment(
@@ -95,6 +95,8 @@ class AddCacheFragment : Fragment() {
             }
         }
     }
+
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -124,9 +126,9 @@ class AddCacheFragment : Fragment() {
 
 
         } else {
-            ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 10001)
+            ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), newCacheActivityRequestCode)
             ActivityCompat.requestPermissions(this.requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 10001)
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), newCacheActivityRequestCode)
             Toast.makeText(
                 this.requireContext(),
                 R.string.needGpsHint,

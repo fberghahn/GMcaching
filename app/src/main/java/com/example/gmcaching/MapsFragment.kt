@@ -64,7 +64,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
             cacheLocation = LatLng(it.getString("lat")!!.toDouble(),it.getString("lng")!!.toDouble())
             title=it.getString("title").toString()
         }
-        title= context?.resources?.getString(title.toInt()).toString()
+        title= title.toString()
         mMap = p0
         mMap.uiSettings.isZoomControlsEnabled = true
 //        mMap.setOnMarkerClickListener(this)

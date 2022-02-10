@@ -1,26 +1,14 @@
 package com.example.gmcaching
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
-import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.findNavController
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,11 +16,7 @@ import com.example.gmcaching.adapter.ItemAdapter
 import com.example.gmcaching.adapter.ItemListAdapter
 import com.example.gmcaching.data.Item
 import com.example.gmcaching.databinding.DatabaseFragmentBinding
-import com.example.gmcaching.model.Cache
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnCompleteListener
-import kotlin.properties.Delegates
 
 
 class DatabaseFragment : Fragment() {
@@ -42,7 +26,6 @@ class DatabaseFragment : Fragment() {
     private var _binding : DatabaseFragmentBinding?= null//??
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private val newCacheActivityRequestCode = 1
     private val itemViewModel: ItemViewModel by viewModels {
         WordViewModelFactory((this.requireActivity().application as ItemApplication).repository)
     }
@@ -52,6 +35,7 @@ class DatabaseFragment : Fragment() {
     private lateinit var newTitle: String
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var myDataset : LiveData<List<Item>>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,9 +57,10 @@ class DatabaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        recyclerView = binding.recyclerview
+        myDataset=itemViewModel.allItems
+        val itemAdapter = ItemAdapter(this.requireContext(),myDataset)
         val adapter = ItemListAdapter()
+        recyclerView = binding.recyclerview
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
 
@@ -85,13 +70,18 @@ class DatabaseFragment : Fragment() {
             // Update the cached copy of the words in the adapter.
             Items.let { adapter.submitList(it) }
 
+            recyclerView.adapter=itemAdapter //Funktioniert Unerklärlicher Weise
         }
+
         handleData()
         binding.fab.setOnClickListener() {
             val action = DatabaseFragmentDirections.actionDatabaseFragmentToAddCacheFragment()
             findNavController().navigate(action)
         }
+//       recyclerView.adapter=itemAdapter //Während das Bugged
     }
+
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -124,6 +114,7 @@ class DatabaseFragment : Fragment() {
             if (newLat!=0.0 && newLng!=0.0){
             val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
             itemViewModel.insert(item)
+                arguments?.clear()
                 }
 
         }

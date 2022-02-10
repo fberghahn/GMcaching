@@ -23,7 +23,7 @@ class ItemListAdapter : ListAdapter<Item, ItemListAdapter.WordViewHolder>(WordsC
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(current.cacheName)
-        holder.bindimg(R.drawable.image1)
+        holder.bindimg(image1)
     }
 
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,7 +33,7 @@ class ItemListAdapter : ListAdapter<Item, ItemListAdapter.WordViewHolder>(WordsC
             wordItemView.text = text
         }
         fun bindimg(Int: Int) {
-            imageItemView.setImageResource( R.drawable.image1)
+            imageItemView.setImageResource( image1)
         }
 
         companion object {
