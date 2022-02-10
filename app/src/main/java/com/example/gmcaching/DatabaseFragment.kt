@@ -67,8 +67,6 @@ class DatabaseFragment : Fragment() {
         val view = binding.root
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
-
-
         return view
     }
 
@@ -80,7 +78,6 @@ class DatabaseFragment : Fragment() {
         val adapter = ItemListAdapter()
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
-
 
 
 
