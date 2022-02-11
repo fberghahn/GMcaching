@@ -9,10 +9,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(Item::class), version = 3, exportSchema = false)
+@Database(entities = arrayOf(Item::class,Comment::class), version = 4, exportSchema = false)
 public abstract class ItemRoomDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
+    abstract fun commentDao(): CommentDao
 
     private class ItemDatabaseCallback(
         private val scope: CoroutineScope
@@ -23,6 +24,8 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populateDatabase(database.itemDao())
+
+
 
                 }
             }
@@ -40,7 +43,20 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
             itemDao.insert(name)
 
 
-            // TODO: Add your own words!
+
+        }
+        suspend fun populateCommentDatabase(commentDao: CommentDao) {
+            // Delete all content here.
+            commentDao.deleteAll()
+
+
+            // Add sample words.
+            var comment = Comment(1,1,"Test1","war echt gut versteckt")
+            commentDao.insert(comment)
+
+
+
+
         }
     }
 
@@ -49,6 +65,8 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
         // same time.
         @Volatile
         private var INSTANCE: ItemRoomDatabase? = null
+        @Volatile
+        private var INSTANCE2: ItemRoomDatabase? = null
 
         fun getDatabase(context: Context, scope: CoroutineScope): ItemRoomDatabase {
             // if the INSTANCE is not null, then return it,
@@ -64,6 +82,8 @@ public abstract class ItemRoomDatabase : RoomDatabase() {
                 INSTANCE = instance
                 // return instance
                 instance
+
+
             }
         }
 

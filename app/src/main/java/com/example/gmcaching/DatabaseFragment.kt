@@ -12,7 +12,6 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gmcaching.adapter.ItemAdapter
 import com.example.gmcaching.adapter.ItemListAdapter
 import com.example.gmcaching.data.Item
 import com.example.gmcaching.databinding.DatabaseFragmentBinding
@@ -27,7 +26,7 @@ class DatabaseFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private val itemViewModel: ItemViewModel by viewModels {
-        WordViewModelFactory((this.requireActivity().application as ItemApplication).repository)
+        ItemViewModel.WordViewModelFactory((this.requireActivity().application as ItemApplication).repository)
     }
 
     private var newLat :Double =0.0
@@ -112,7 +111,7 @@ class DatabaseFragment : Fragment() {
             }
             if (newLat!=0.0 && newLng!=0.0){
             val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
-            itemViewModel.insert(item)
+            itemViewModel.insertItem(item)
                 arguments?.clear()
                 }
 

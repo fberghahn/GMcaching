@@ -1,11 +1,11 @@
 package com.example.gmcaching.adapter
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gmcaching.DatabaseFragmentDirections
 import com.example.gmcaching.R
 import com.example.gmcaching.R.drawable.image1
-import com.example.gmcaching.data.Datasource
 import com.example.gmcaching.data.Item
 
 class ItemListAdapter(private val context: Context, private val dataset: LiveData<List<Item>>) : ListAdapter<Item, ItemListAdapter.WordViewHolder>(WordsComparator()) {
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val button = itemView.findViewById<Button>(R.id.button1)
+        val showOnMapButton = itemView.findViewById<Button>(R.id.button_showOnMap)
+        val commentButton = itemView.findViewById<ImageButton>(R.id.button_comment)
          val wordItemView: TextView = itemView.findViewById(R.id.item_title)
          val imageItemView: ImageView = itemView.findViewById(R.id.item_image)
         fun bind(text: String?) {
@@ -53,8 +53,12 @@ class ItemListAdapter(private val context: Context, private val dataset: LiveDat
             val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName )
             holder.itemView.findNavController().navigate(action)
         }
-        holder.button.setOnClickListener{
+        holder.showOnMapButton.setOnClickListener{
             val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName )
+            holder.itemView.findNavController().navigate(action)
+        }
+        holder.commentButton.setOnClickListener{
+            val action = DatabaseFragmentDirections.actionDatabaseFragmentToCommentFragment(current.id, current.cacheName)
             holder.itemView.findNavController().navigate(action)
         }
     }

@@ -16,5 +16,8 @@ interface ItemDao {
 
     @Query("DELETE FROM item_table")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM item_table where id =:idlook ")
+      fun findItemByID(idlook: Int) : Flow<Item>
 }
 

@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gmcaching.adapter.ItemAdapter
-import com.example.gmcaching.data.Datasource
 import com.example.gmcaching.databinding.CachesListFragmentBinding
 
 

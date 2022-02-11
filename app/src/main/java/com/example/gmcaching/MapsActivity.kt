@@ -1,6 +1,7 @@
 package com.example.gmcaching
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -18,7 +19,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.gmcaching.databinding.ActivityMapsBinding
-import com.example.gmcaching.model.Cache
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.Marker
@@ -88,6 +88,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMarke
         }
     }*/
 
+    @SuppressLint("MissingPermission")
     private fun setUpMap() {
 
         if (ActivityCompat.checkSelfPermission(

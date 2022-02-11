@@ -64,6 +64,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
             cacheLocation = LatLng(it.getString("lat")!!.toDouble(),it.getString("lng")!!.toDouble())
             title=it.getString("title").toString()
         }
+        arguments?.clear()
         title= title.toString()
         mMap = p0
         mMap.uiSettings.isZoomControlsEnabled = true
@@ -86,7 +87,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
 
         mMap.addMarker(MarkerOptions().position(cacheLocation).title(title))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(cacheLocation))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cacheLocation, 13f))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cacheLocation, 14f))
         mMap.addCircle(circleOptions)
 
     }

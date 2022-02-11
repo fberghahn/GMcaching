@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
 
     <ImageView
         android:id="@+id/item_image"
@@ -11,7 +18,8 @@
         android:clickable="true"
         android:focusable="true"
         android:importantForAccessibility="no"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:srcCompat="@drawable/image1" />
 
     <TextView
         android:id="@+id/item_title"
@@ -20,9 +28,29 @@
         android:padding="16dp"
         android:textAppearance="?attr/textAppearanceHeadline6" />
 
+
+    <ImageButton
+        android:id="@+id/button_comment"
+        android:layout_width="49dp"
+        android:layout_height="38dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:minWidth="32dp"
+        android:minHeight="48dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_baseline_comment_24"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/button_showOnMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Anzeigen" />
+        android:text="@string/anzeigen"
+        app:icon="@drawable/ic_baseline_location_on_24" />
+
+
+
+
 </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
