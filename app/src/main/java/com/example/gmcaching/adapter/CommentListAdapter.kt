@@ -15,11 +15,10 @@ import com.example.gmcaching.R
 import com.example.gmcaching.data.Comment
 import com.example.gmcaching.data.Item
 
-class CommentListAdapter (private val context: Context, private val dataset: LiveData<List<Comment>>) : ListAdapter<Comment, CommentListAdapter.WordViewHolder>(
+class CommentListAdapter (private val cacheid:Int, private val context: Context, private val dataset: LiveData<List<Comment>>) : ListAdapter<Comment, CommentListAdapter.WordViewHolder>(
     CommentListAdapter.WordsComparator()
 ) {
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val postCommentButton = itemView.findViewById<ImageButton>(R.id.button_save_comment)
         val commentItemView: TextView = itemView.findViewById(R.id.comment)
         fun bind(text: String?) {
             commentItemView.text = text
@@ -44,7 +43,12 @@ class CommentListAdapter (private val context: Context, private val dataset: Liv
 
     override fun onBindViewHolder(holder: CommentListAdapter.WordViewHolder, position: Int) {
         val current = getItem(position)
+        if (current.cacheID==cacheid)
         holder.bind(current.comment)
+       else
+        {
+            //Recyclerview resetten
+        }
     }
 
 

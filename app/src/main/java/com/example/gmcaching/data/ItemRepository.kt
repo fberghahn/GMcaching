@@ -38,5 +38,9 @@ class ItemRepository(private val itemDao: ItemDao, private val commentDao: Comme
      fun findeItemByID(id: Int) : Flow<Item> {
         return itemDao.findItemByID(id)
     }
+    @WorkerThread
+    fun getCommentsForCacheID(id:Int): Flow<List<Comment>> {
+       return commentDao.getCommentsForCacheID(id)
+    }
 
 }

@@ -54,9 +54,11 @@ class CommentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myDataset=itemViewModel.allComments
+        myDataset=itemViewModel.getCommentsForCacheID(id).asLiveData()
+        val id = arguments?.let { it.getInt("id")}
 
-        val adapter = CommentListAdapter(this.requireContext(),myDataset)
+
+        val adapter = CommentListAdapter(id!!,this.requireContext(),myDataset)
         recyclerView = binding.recyclerviewComment
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
@@ -77,7 +79,6 @@ class CommentFragment : Fragment() {
     }
 
     private fun handleData() {
-        val id = arguments?.let { it.getInt("id")}
         val name= arguments?.let { it.getString("title").toString() }
         if ( id!=-1 ) {
 

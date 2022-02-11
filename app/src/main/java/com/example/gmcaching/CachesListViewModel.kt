@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.gmcaching.data.Comment
 import com.example.gmcaching.data.Item
 import com.example.gmcaching.data.ItemRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
@@ -37,6 +38,8 @@ class ItemViewModel(private val itemRepository: ItemRepository) : ViewModel() {
     }
 
     fun findeItemByID(id: Int) = itemRepository.findeItemByID(id)
+
+    fun getCommentsForCacheID(id:Int): Flow<List<Comment>> = itemRepository.getCommentsForCacheID(id)
 
 
     class WordViewModelFactory(private val repository: ItemRepository) : ViewModelProvider.Factory {

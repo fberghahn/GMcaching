@@ -12,6 +12,9 @@ interface CommentDao {
         @Query("SELECT * FROM comment ORDER BY id ASC")
         fun getAlphabetizedWords(): Flow<List<Comment>>
 
+        @Query("SELECT * FROM comment where cacheID = :id ORDER BY id ASC")
+        fun getCommentsForCacheID(id:Int): Flow<List<Comment>>
+
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         suspend fun insert(Comment: Comment)
 
