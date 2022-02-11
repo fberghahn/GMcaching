@@ -47,6 +47,7 @@ class CommentListAdapter (private val cacheid:Int, private val context: Context,
         holder.bind(current.comment)
        else
         {
+            holder.itemView.visibility=View.GONE
             //Recyclerview resetten
         }
     }
