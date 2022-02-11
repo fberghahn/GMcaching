@@ -1,6 +1,7 @@
 package com.example.gmcaching
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -77,7 +78,7 @@ class CommentFragment : Fragment() {
 
     private fun handleData() {
         val id = arguments?.let { it.getInt("id")}
-        val name= arguments?.let { it.getString("name").toString() }
+        val name= arguments?.let { it.getString("title").toString() }
         if ( id!=-1 ) {
 
 //            val thiscache = itemViewModel.findeItemByID(id!!).asLiveData()
@@ -85,6 +86,8 @@ class CommentFragment : Fragment() {
             val comment =  Comment(cachename = name!!, cacheID = id!!, comment = binding.editComment.text.toString())
             if (comment != null&&comment.cacheID!=-1&&comment.cachename!="null") {
                 itemViewModel.insertComment(comment)
+                binding.editComment.text.clear()
+
             }
             else Toast.makeText(
                 this.requireContext(),

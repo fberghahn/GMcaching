@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GMcaching</string>
-    <string name="cache_list_fragment_label">Item: {title}</string>
+    <string name="cache_list_fragment_label">Cache: {title}</string>
+    <string name="new_cache">Neuen Cache Hinzufügen</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="cache1">1. Baumstumpf</string>
     <string name="cache2">2. Gps Suche</string>
