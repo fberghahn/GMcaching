@@ -1,16 +1,18 @@
 package com.example.gmcaching.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gmcaching.R
 import com.example.gmcaching.data.Comment
 
-class CommentListAdapter (private val cacheid:String, private val dataset: ArrayList<Comment>) : RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>() {
+class CommentListAdapter ( private val dataset: ArrayList<Comment>) : RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>() {
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val commentItemView: TextView = itemView.findViewById(R.id.comment)
         val creatorItemView: TextView = itemView.findViewById(R.id.username)
@@ -35,17 +37,17 @@ class CommentListAdapter (private val cacheid:String, private val dataset: Array
         return CommentListAdapter.CommentViewHolder.create(parent)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: CommentListAdapter.CommentViewHolder, position: Int) {
         val current = dataset[position]
-        if (current.cacheid==cacheid) {
+
             holder.bind(current.comment)
             holder.creatorItemView.text = current.creatorid
-        }
-       else
-        {
-            holder.itemView.visibility=View.GONE
+
+
+//            holder.itemView.visibility=View.GONE
             //Recyclerview resetten
-        }
+
     }
 
 

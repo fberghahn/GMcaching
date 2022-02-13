@@ -1,5 +1,6 @@
 package com.example.gmcaching
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,19 +53,21 @@ class CommentFragment : Fragment() {
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val id = arguments?.let { it.getString("cacheid")}
+        val cacheid = arguments?.let { it.getString("cacheid")}
 
         myDataset=ArrayList<Comment>()
 
-        val adapter = CommentListAdapter(id!!,myDataset)
+
+        val adapter = CommentListAdapter(myDataset)
         recyclerView = binding.recyclerviewComment
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
-        loadDataFromServer()
+        loadDataFromServer(cacheid!!)
 
 
 
@@ -101,7 +105,7 @@ class CommentFragment : Fragment() {
         ).show()
     }
 
-    private fun loadDataFromServer() {
+    private fun loadDataFromServer(cacheid:String) {
         val databaseRef = FirebaseDatabase.getInstance("https://real-gm-caching-97159-default-rtdb.europe-west1.firebasedatabase.app").reference
         databaseRef.child("Comment").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -111,6 +115,7 @@ class CommentFragment : Fragment() {
                 for (postSnapshot in snapshot.children)
                 {
                     val currentComment=postSnapshot.getValue(Comment::class.java)
+                    if (currentComment?.cacheid==cacheid)
                     myDataset.add(currentComment!!)
                 }
                 Log.d("DatabaseRead", "Value is: $myDataset")
