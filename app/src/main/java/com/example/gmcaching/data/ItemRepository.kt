@@ -1,7 +1,6 @@
 package com.example.gmcaching.data
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO

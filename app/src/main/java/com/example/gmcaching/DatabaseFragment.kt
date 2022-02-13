@@ -111,7 +111,21 @@ class DatabaseFragment : Fragment() {
             }
             if (newLat!=0.0 && newLng!=0.0){
             val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
-            itemViewModel.insertItem(item)
+            if(itemViewModel.insertItem(item))
+            {
+                Toast.makeText(
+                context,
+                "Nicht hinzugefügt",
+                Toast.LENGTH_LONG
+            ).show()
+            }
+                else{
+                Toast.makeText(
+                    context,
+                    "Erfolgreich hinzugefügt",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
                 arguments?.clear()
                 }
 
