@@ -7,50 +7,57 @@ import kotlinx.coroutines.launch
 
 
 
-class ItemViewModel(private val itemRepository: ItemRepository) : ViewModel() {
+class ItemViewModel() : ViewModel() {
 
     // Using LiveData and caching what allWords returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allItems: LiveData<List<Item>> = itemRepository.allItems.asLiveData()
-    val allComments: LiveData<List<Comment>> = itemRepository.allComments.asLiveData()
+//    val allItems: LiveData<List<Item>> = itemRepository.allItems.asLiveData()
+
     val cacheDao = CacheDao()
+    val commentDao = CommentDao()
+   // val allItems: ArrayList<Cache> = cacheDao.getAlphabetizedWords()    Not Working
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun insertItem(item: Item):Boolean{
+    fun insertItem(cache: Cache):Boolean{
         var test=false
         viewModelScope.launch {
 //        itemRepository.insert_item(item)
-            test= cacheDao.insert(item)
+            test= cacheDao.insert(cache)
     }
         return test
     }
 
     fun insertComment(comment: Comment) = viewModelScope.launch {
-        itemRepository.insert_comment(comment)
+        commentDao.insert(comment)
     }
 
     fun deleteAllItems() = viewModelScope.launch {
-        itemRepository.deleteAll_items()
+        cacheDao.deleteAll()
     }
 
     fun deleteAllComments() = viewModelScope.launch {
-        itemRepository.deleteAll_comments()
+        commentDao.deleteAll()
     }
 
-    fun findItemByID(id: Int) = itemRepository.findeItemByID(id)
+    fun findItemByID(id: Int) {
 
-    fun getCommentsForCacheID(id:Int): Flow<List<Comment>> = itemRepository.getCommentsForCacheID(id)
+    }
+
+//    fun getCommentsForCacheID(id:Int): Flow<List<Comment>> {
+//
+//
+//    }
 
 
-    class WordViewModelFactory(private val repository: ItemRepository) : ViewModelProvider.Factory {
+    class WordViewModelFactory() : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ItemViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return ItemViewModel(repository) as T
+                return ItemViewModel() as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

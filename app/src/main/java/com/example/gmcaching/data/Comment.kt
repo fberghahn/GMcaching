@@ -4,17 +4,27 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "comment")
-data class Comment (
+class Comment{
+    var commentid: String ="generated"
+    var creatorid: String? ="Noch nicht implementiert"
+    var cacheid : String? =null
+    var comment: String? =null
+    var cachename: String?="null"
 
+    constructor(){}
+    constructor(commentid:String,creatorid: String?,cacheid: String?, comment: String?, cachename: String?){
+        this.commentid=commentid
+        this.creatorid=creatorid
+        this.cacheid=cacheid
+        this.comment=comment
+        this.cachename=cachename
 
-    @PrimaryKey(autoGenerate = true)
-    val id: Int =0 ,
-    @ColumnInfo(name = "cacheID")
-    val cacheID: Int,
-    @ColumnInfo(name = "Cache Name:")
-    val cachename: String,
-    @ColumnInfo(name = "Kommentar")
-    val comment: String,
+    }
+    constructor(cachename:String?,cacheid: String?,comment: String?){
+        this.cachename=cachename
+        this.cacheid=cacheid
+        this.comment=comment
 
-    )
+    }
+
+}

@@ -72,9 +72,9 @@
         android:name="com.example.gmcaching.CommentFragment"
         android:label="@string/cache_list_fragment_label">
         <argument
-            android:name="id"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:name="cacheid"
+            app:argType="string"
+            android:defaultValue="-1" />
         <argument
             android:name="title"
             android:defaultValue="null"

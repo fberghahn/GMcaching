@@ -2,20 +2,24 @@ package com.example.gmcaching
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gmcaching.adapter.ItemListAdapter
-import com.example.gmcaching.data.Item
+import com.example.gmcaching.data.Cache
 import com.example.gmcaching.databinding.DatabaseFragmentBinding
 import com.google.android.gms.location.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class DatabaseFragment : Fragment() {
@@ -26,7 +30,7 @@ class DatabaseFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private val itemViewModel: ItemViewModel by viewModels {
-        ItemViewModel.WordViewModelFactory((this.requireActivity().application as ItemApplication).repository)
+        ItemViewModel.WordViewModelFactory()
     }
 
     private var newLat :Double =0.0
@@ -34,7 +38,7 @@ class DatabaseFragment : Fragment() {
     private lateinit var newTitle: String
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
-    private lateinit var myDataset : LiveData<List<Item>>
+    private lateinit var myDataset : ArrayList<Cache>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,21 +59,16 @@ class DatabaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        myDataset=ArrayList<Cache>()
 
-        myDataset=itemViewModel.allItems
-        val adapter = ItemListAdapter(this.requireContext(),myDataset)
+
+
+        val adapter = ItemListAdapter(myDataset)
         recyclerView = binding.recyclerview
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+        loadDataFromServer()
 
-
-
-        itemViewModel.allItems.observe(this.requireActivity()) { Items ->
-            // Update the cached copy of the words in the adapter.
-            Items.let { adapter.submitList(it) }
-
-
-        }
 
         handleData()
         binding.fab.setOnClickListener() {
@@ -110,8 +109,8 @@ class DatabaseFragment : Fragment() {
                 newLng= it.getString("lng")!!.toDouble()
             }
             if (newLat!=0.0 && newLng!=0.0){
-            val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
-            if(itemViewModel.insertItem(item))
+            val cache = Cache( creatorid = "noch nicht implementiert", cacheName = newTitle, lat = newLat, lng = newLng)
+            if(itemViewModel.insertItem(cache))
             {
                 Toast.makeText(
                 context,
@@ -130,6 +129,31 @@ class DatabaseFragment : Fragment() {
                 }
 
         }
+    }
+
+    private fun loadDataFromServer() {
+        val databaseRef = FirebaseDatabase.getInstance("https://real-gm-caching-97159-default-rtdb.europe-west1.firebasedatabase.app").reference
+        databaseRef.child("Cache").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                myDataset.clear()
+                for (postSnapshot in snapshot.children)
+                {
+                    val currentCache=postSnapshot.getValue(Cache::class.java)
+                    myDataset.add(currentCache!!)
+                }
+                Log.d("DatabaseRead", "Value is: $myDataset")
+               recyclerView.adapter?.notifyDataSetChanged()
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("DatabaseRead", "Failed to read value.", error.toException())
+
+            }
+
+        })
     }
 
 
