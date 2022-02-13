@@ -16,6 +16,12 @@ import com.example.gmcaching.adapter.ItemListAdapter
 import com.example.gmcaching.data.Item
 import com.example.gmcaching.databinding.DatabaseFragmentBinding
 import com.google.android.gms.location.*
+import com.google.firebase.database.DatabaseReference
+
+import com.google.firebase.database.FirebaseDatabase
+
+
+
 
 
 class DatabaseFragment : Fragment() {
@@ -111,7 +117,9 @@ class DatabaseFragment : Fragment() {
             }
             if (newLat!=0.0 && newLng!=0.0){
             val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
-            itemViewModel.insertItem(item)
+//            itemViewModel.insertItem(item)
+                val database = FirebaseDatabase.getInstance().reference
+                database.child("test").child("fgfgf").setValue("test")
                 arguments?.clear()
                 }
 
