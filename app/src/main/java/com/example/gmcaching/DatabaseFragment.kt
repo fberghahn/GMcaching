@@ -117,9 +117,27 @@ class DatabaseFragment : Fragment() {
             }
             if (newLat!=0.0 && newLng!=0.0){
             val item = Item(cacheName = newTitle, lat = newLat, lng = newLng)
+<<<<<<< HEAD
 //            itemViewModel.insertItem(item)
                 val database = FirebaseDatabase.getInstance().reference
                 database.child("test").child("fgfgf").setValue("test")
+=======
+            if(itemViewModel.insertItem(item))
+            {
+                Toast.makeText(
+                context,
+                "Nicht hinzugefügt",
+                Toast.LENGTH_LONG
+            ).show()
+            }
+                else{
+                Toast.makeText(
+                    context,
+                    "Erfolgreich hinzugefügt",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+>>>>>>> 9bc170fe1ec52f310ab934c4d2969fbbeb0aad0b
                 arguments?.clear()
                 }
 

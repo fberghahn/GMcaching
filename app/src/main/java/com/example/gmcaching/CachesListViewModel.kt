@@ -1,9 +1,7 @@
 package com.example.gmcaching
 
 import androidx.lifecycle.*
-import com.example.gmcaching.data.Comment
-import com.example.gmcaching.data.Item
-import com.example.gmcaching.data.ItemRepository
+import com.example.gmcaching.data.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -17,12 +15,18 @@ class ItemViewModel(private val itemRepository: ItemRepository) : ViewModel() {
     // - Repository is completely separated from the UI through the ViewModel.
     val allItems: LiveData<List<Item>> = itemRepository.allItems.asLiveData()
     val allComments: LiveData<List<Comment>> = itemRepository.allComments.asLiveData()
+    val cacheDao = CacheDao()
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun insertItem(item: Item) = viewModelScope.launch {
-        itemRepository.insert_item(item)
+    fun insertItem(item: Item):Boolean{
+        var test=false
+        viewModelScope.launch {
+//        itemRepository.insert_item(item)
+            test= cacheDao.insert(item)
+    }
+        return test
     }
 
     fun insertComment(comment: Comment) = viewModelScope.launch {
@@ -37,7 +41,7 @@ class ItemViewModel(private val itemRepository: ItemRepository) : ViewModel() {
         itemRepository.deleteAll_comments()
     }
 
-    fun findeItemByID(id: Int) = itemRepository.findeItemByID(id)
+    fun findItemByID(id: Int) = itemRepository.findeItemByID(id)
 
     fun getCommentsForCacheID(id:Int): Flow<List<Comment>> = itemRepository.getCommentsForCacheID(id)
 
