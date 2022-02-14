@@ -4,23 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="@dimen/big_padding">
+    android:layout_marginTop="@dimen/big_padding"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/edit_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/big_padding"
         android:fontFamily="sans-serif-light"
         android:hint="@string/kommentar"
-        android:inputType="textAutoComplete"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine|textAutoComplete"
         android:maxHeight="100dp"
         android:minHeight="@dimen/min_height"
         android:textSize="12sp"
-        tools:text="huete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurighuete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurighuete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurig"
-        android:importantForAutofill="no"
-        />
+        tools:text="huete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurighuete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurighuete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurig" />
 
     <Button
         android:id="@+id/button_save_comment"
@@ -37,7 +36,6 @@
         android:id="@+id/recyclerviewComment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/recyclerview_comment"
-        android:padding="@dimen/big_padding"
-        />
+        android:layout_margin="@dimen/small_padding"
+        tools:listitem="@layout/recyclerview_comment" />
 </LinearLayout>

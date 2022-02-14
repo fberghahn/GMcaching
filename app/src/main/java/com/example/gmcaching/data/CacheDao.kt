@@ -37,7 +37,7 @@ class CacheDao (){
         })
         return cacheList
     }
-    @Suppress("RedundantSuspendModifier")
+
     @WorkerThread
     suspend fun insert(cache : Cache): Boolean {
 

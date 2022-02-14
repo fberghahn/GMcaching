@@ -116,15 +116,20 @@ class CommentFragment : Fragment() {
                 {
                     val currentComment=postSnapshot.getValue(Comment::class.java)
                     if (currentComment?.cacheid==cacheid)
-                    myDataset.add(currentComment!!)
+                    myDataset.add(currentComment)
                 }
                 Log.d("DatabaseRead", "Value is: $myDataset")
+
                 recyclerView.adapter?.notifyDataSetChanged()
+
+
             }
 
 
             override fun onCancelled(error: DatabaseError) {
                 Log.w("DatabaseRead", "Failed to read value.", error.toException())
+
+
 
             }
 

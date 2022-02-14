@@ -61,7 +61,7 @@ class DatabaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         myDataset=ArrayList<Cache>()
 
-
+        val herecontext=this.requireContext()
 
         val adapter = ItemListAdapter(myDataset)
         recyclerView = binding.recyclerview
@@ -144,12 +144,22 @@ class DatabaseFragment : Fragment() {
                     myDataset.add(currentCache!!)
                 }
                 Log.d("DatabaseRead", "Value is: $myDataset")
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Data loaded sucessfully",
+//                    Toast.LENGTH_LONG
+//                ).show()
                recyclerView.adapter?.notifyDataSetChanged()
             }
 
 
             override fun onCancelled(error: DatabaseError) {
                 Log.w("DatabaseRead", "Failed to read value.", error.toException())
+//                Toast.makeText(
+//                    context,
+//                    "Data Could not load, try enabling wifi",
+//                    Toast.LENGTH_LONG
+//                ).show()
 
             }
 

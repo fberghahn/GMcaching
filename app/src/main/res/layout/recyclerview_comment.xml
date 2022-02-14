@@ -22,15 +22,16 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textSize="15sp"
                 tools:text="Stefan" />
 
             <TextView
                 android:id="@+id/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 tools:text="huete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurig" />
 
