@@ -45,21 +45,6 @@
         <action
             android:id="@+id/action_databaseFragment_to_addCacheFragment"
             app:destination="@id/addCacheFragment" />
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="lat"
-            android:defaultValue="0"
-            app:argType="string" />
-        <argument
-            android:name="lng"
-            android:defaultValue="0"
-            app:argType="string" />
-        <argument
-            android:name="text_is_ready"
-            android:defaultValue="false"
-            app:argType="boolean" />
         <action
             android:id="@+id/action_databaseFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />

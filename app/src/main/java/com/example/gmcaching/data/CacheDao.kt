@@ -1,11 +1,17 @@
 package com.example.gmcaching.data
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.annotation.WorkerThread
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
+import com.example.gmcaching.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 
 class CacheDao (){
@@ -42,7 +48,7 @@ class CacheDao (){
     suspend fun insert(cache : Cache): Boolean {
 
 
-        val cache=Cache(databaseRef.push().key!!,cache.creatorid,cache.cacheName,cache.lat,cache.lng)
+        val cache=Cache(databaseRef.push().key!!,cache.creatorid,cache.cacheName,cache.lat,cache.lng ,cache.image)
         databaseRef.child("Cache").child(cache.cacheid).setValue(cache).addOnCompleteListener{
             isInsertSuccess=true
 
@@ -57,5 +63,21 @@ class CacheDao (){
     @WorkerThread
     suspend fun deleteAll() {
         databaseRef.removeValue()
+    }
+
+@WorkerThread
+    suspend fun getImage(image: String?, context :Context): Bitmap {
+        val storage = FirebaseStorage.getInstance().reference
+
+        val pathReference = storage.child("images/")
+        var useableImage: Bitmap = ContextCompat.getDrawable(context, R.drawable.image1)!!.toBitmap()
+        pathReference.child(image!!).getBytes(1024*1024).addOnSuccessListener {
+//            useableImage=BitmapFactory.decodeByteArray(it,0,it.size)
+            useableImage= ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
+
+        }.addOnFailureListener {
+            useableImage= ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
+        }
+        return useableImage
     }
 }

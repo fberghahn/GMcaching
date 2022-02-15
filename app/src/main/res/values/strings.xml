@@ -8,7 +8,7 @@
     <string name="cache3">3. Gefunden dank GMcaching</string>
     <string name="cache4">4. Beispiel</string>
     <string name="hint_name">Name...</string>
-    <string name="hint_koordinaten">Meinen Standort Verwenden</string>
+    <string name="hint_koordinaten">Mein Standort wird verwendet</string>
     <string name="hint_suchcounter">Kommentar...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
@@ -19,5 +19,6 @@
     <string name="anzeigen">Anzeigen</string>
     <string name="kommentar">Kommentar</string>
     <string name="kommentar_posten">Kommentar Posten</string>
+    <string name="standardbild">Standardbild</string>
 
 </resources>

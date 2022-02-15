@@ -1,13 +1,14 @@
 package com.example.gmcaching.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,20 +16,20 @@ import com.example.gmcaching.DatabaseFragmentDirections
 import com.example.gmcaching.R
 import com.example.gmcaching.R.drawable.image1
 import com.example.gmcaching.data.Cache
+import com.google.firebase.storage.FirebaseStorage
 
-class ItemListAdapter( private val dataset: ArrayList<Cache>) :
+class ItemListAdapter( private val context: Context ,private val dataset: ArrayList<Cache>) :
     RecyclerView.Adapter<ItemListAdapter.CacheViewHolder>() {
     class CacheViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val showOnMapButton = itemView.findViewById<Button>(R.id.button_showOnMap)
         val commentButton = itemView.findViewById<ImageButton>(R.id.button_comment)
          val wordItemView: TextView = itemView.findViewById(R.id.item_title)
          val imageItemView: ImageView = itemView.findViewById(R.id.item_image)
+        val progressbar  = itemView.findViewById(R.id.progressBar) as ProgressBar
         fun bind(text: String?) {
             wordItemView.text = text
         }
-        fun bindimg(Int: Int) {
-            imageItemView.setImageResource( image1)
-        }
+
 
         companion object {
             fun create(parent: ViewGroup): CacheViewHolder {
@@ -47,7 +48,17 @@ class ItemListAdapter( private val dataset: ArrayList<Cache>) :
     override fun onBindViewHolder(holder: CacheViewHolder, position: Int) {
         val current = dataset[position]
         holder.bind(current.cacheName)
-        holder.bindimg(image1)
+        if (current.image!=null){
+            getImage(current.image, holder)
+
+
+
+
+        }else{
+            holder.imageItemView.setImageResource(image1)
+            holder.progressbar.visibility = View.GONE
+        }
+
         holder.imageItemView.setOnClickListener{
             val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!! )
             holder.itemView.findNavController().navigate(action)
@@ -62,6 +73,26 @@ class ItemListAdapter( private val dataset: ArrayList<Cache>) :
         }
     }
 
+    private fun getImage(image: String?, holder: CacheViewHolder)  {
+        val storage = FirebaseStorage.getInstance().reference
+
+        val pathReference = storage.child("images/")
+        var usableImage: Bitmap =ContextCompat.getDrawable(context, image1)!!.toBitmap()
+
+        pathReference.child(image!!).getBytes(1024*1024).addOnSuccessListener {
+           holder.imageItemView.setImageBitmap( BitmapFactory.decodeByteArray(it,0,it.size))
+            holder.progressbar.visibility = View.GONE
+//           imagesave=ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
+
+
+
+        }.addOnFailureListener {
+            holder.imageItemView.setImageBitmap(usableImage)
+            holder.progressbar.visibility = View.GONE
+
+        }
+
+    }
 
 
     class WordsComparator : DiffUtil.ItemCallback<Cache>() {
