@@ -15,13 +15,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "215672600304-spfec5lj0v7h4tontvuhsl8spbojqsog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gmcaching",
+            "certificate_hash": "7f99127c84855fa554ad375b08a85d18f1516e83"
+          }
+        },
+        {
           "client_id": "215672600304-9822qolrl6lgjekds6jadhbi6g9ttq8o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": ""
+          "current_key": "AIzaSyDmcYjIRH06k6cIoSeFjBiHBZ9srRlGGjc"
         }
       ],
       "services": {
