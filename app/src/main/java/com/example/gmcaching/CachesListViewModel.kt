@@ -22,17 +22,23 @@ class ItemViewModel() : ViewModel() {
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun insertItem(cache: Cache):Boolean{
-        var test=false
+    fun insertItem(cache: Cache){
         viewModelScope.launch {
 //        itemRepository.insert_item(item)
-            test= cacheDao.insert(cache)
+            cacheDao.insert(cache)
     }
-        return test
+
     }
 
     fun insertComment(comment: Comment) = viewModelScope.launch {
         commentDao.insert(comment)
+    }
+    fun updateCache(cache: Cache) = viewModelScope.launch {
+        cacheDao.update(cache)
+    }
+
+    fun setCacheFoundTrue(cacheid : String) = viewModelScope.launch {
+        cacheDao.setFoundTrue(cacheid)
     }
 
     fun deleteAllItems() = viewModelScope.launch {

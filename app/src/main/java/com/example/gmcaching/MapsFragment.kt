@@ -11,10 +11,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.gmcaching.data.Cache
 import com.example.gmcaching.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -35,6 +40,13 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
     private lateinit var cacheLocation : LatLng
     private lateinit var title : String
     private lateinit var mapFragment : SupportMapFragment
+    private lateinit var cacheid : String
+    private lateinit var creatorid : String
+    private  var imageString : String ="null"
+    private lateinit var found_button : Button
+    private val sharedViewModel: ItemViewModel by viewModels {
+        ItemViewModel.WordViewModelFactory()
+    }
 
 
 
@@ -53,6 +65,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
         mapFragment  = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
         mapFragment.getMapAsync(this)
+        found_button=view.findViewById<Button>(R.id.found_cache_button)
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {
@@ -63,6 +76,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
         arguments?.let {
             cacheLocation = LatLng(it.getString("lat")!!.toDouble(),it.getString("lng")!!.toDouble())
             title=it.getString("title").toString()
+            cacheid=it.getString("cacheid").toString()
+            creatorid=it.getString("creatorid").toString()
         }
         arguments?.clear()
         title= title.toString()
@@ -71,6 +86,15 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
 //        mMap.setOnMarkerClickListener(this)
 
         setupMap()
+
+        found_button.setOnClickListener{
+            val currentCache = Cache(cacheid,creatorid,title,cacheLocation.latitude,cacheLocation.longitude,imageString)
+            currentCache.found=true
+            sharedViewModel.updateCache(currentCache)
+
+            val action = MapsFragmentDirections.actionMapsFragmentToDatabaseFragment()
+            findNavController().navigate(action)
+        }
 
 
 

@@ -156,7 +156,7 @@ class AddCacheFragment : Fragment() {
                         cacheName = binding.editName.text.toString(),
                         lat = newLat,
                         lng = newLng,
-                        image = null
+                        image = "null"
                     )
                     sharedViewModel.insertItem(cache)
 
@@ -321,13 +321,13 @@ class AddCacheFragment : Fragment() {
 
 
 
-    private fun uploadImage():String?{
+    private fun uploadImage():String{
 
         val progressDialog = ProgressDialog(this.requireContext())
         progressDialog.setTitle("Uploading Image...")
-        val storage = FirebaseStorage.getInstance()
+        val storage = FirebaseStorage.getInstance("gs://real-gm-caching-97159.appspot.com/")
         val storageReference = storage.reference
-        var randomkey :String?= UUID.randomUUID().toString()
+        var randomkey :String= UUID.randomUUID().toString()
 
         // Create a reference to "mountains.jpg"
 
@@ -347,7 +347,7 @@ class AddCacheFragment : Fragment() {
                 "Fehler, Bild nicht hochgeladen",
                 Toast.LENGTH_SHORT
             ).show()
-            randomkey=null
+            randomkey="null"
             progressDialog.dismiss()
         }.addOnProgressListener {
             val progresspercentage = 100*it.bytesTransferred/it.totalByteCount

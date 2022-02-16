@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage
 class ItemListAdapter( private val context: Context ,private val dataset: ArrayList<Cache>) :
     RecyclerView.Adapter<ItemListAdapter.CacheViewHolder>() {
     class CacheViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val greylayout =itemView.findViewById<ImageView>(R.id.greyscheme)
         val showOnMapButton = itemView.findViewById<Button>(R.id.button_showOnMap)
         val commentButton = itemView.findViewById<ImageButton>(R.id.button_comment)
          val wordItemView: TextView = itemView.findViewById(R.id.item_title)
@@ -49,7 +50,11 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
     override fun onBindViewHolder(holder: CacheViewHolder, position: Int) {
         val current = dataset[position]
         holder.bind(current.cacheName)
-        if (current.image!=null){
+        if (current.found)
+        {
+        holder.greylayout.visibility=View.VISIBLE
+        }
+        if (current.image!="null"){
             getImage(current.image, holder)
 
         }else{
@@ -58,11 +63,11 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
         }
 
         holder.imageItemView.setOnClickListener{
-            val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!! )
+            val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!!,current.cacheid!!, current.creatorid!!,current.image!!)
             holder.itemView.findNavController().navigate(action)
         }
         holder.showOnMapButton.setOnClickListener{
-            val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!! )
+            val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!!,current.cacheid!!,current.creatorid!!,current.image!! )
             holder.itemView.findNavController().navigate(action)
         }
         holder.commentButton.setOnClickListener{
@@ -72,7 +77,7 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
     }
 
     private fun getImage(image: String?, holder: CacheViewHolder)  {
-        val storage = FirebaseStorage.getInstance().reference
+        val storage = FirebaseStorage.getInstance("gs://real-gm-caching-97159.appspot.com/").reference
 
         val pathReference = storage.child("images/")
         var usableImage: Bitmap =ContextCompat.getDrawable(context, image1)!!.toBitmap()
@@ -81,6 +86,7 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
            holder.imageItemView.setImageBitmap( BitmapFactory.decodeByteArray(it,0,it.size))
             holder.progressbar.visibility = View.GONE
             holder.imagenotfoundtextview.visibility=View.GONE
+           notifyDataSetChanged()
 
 //           imagesave=ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
 

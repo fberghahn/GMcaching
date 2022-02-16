@@ -18,6 +18,19 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <argument
+            android:name="cacheid"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="creatorid"
+            app:argType="string" />
+        <argument
+            android:name="imageString"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mapsFragment_to_databaseFragment"
+            app:destination="@id/databaseFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCacheFragment"

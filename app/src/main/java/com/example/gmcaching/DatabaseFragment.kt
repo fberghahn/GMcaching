@@ -104,30 +104,12 @@ class DatabaseFragment : Fragment() {
                     myDataset.add(currentCache!!)
 //                    myImageList.add(getImage(currentCache.image))
                 }
+                myDataset.sortBy { cache: Cache -> cache.found }
                 Log.d("DatabaseRead", "Value is: $myDataset")
-//                Toast.makeText(
-//                    requireContext(),
-//                    "Data loaded sucessfully",
-//                    Toast.LENGTH_LONG
-//                ).show()
                recyclerView.adapter?.notifyDataSetChanged()
             }
 
-//            private fun getImage(image: String?): Bitmap {
-//                val storage = FirebaseStorage.getInstance()
-//
-//                val pathReference = storage.getReferenceFromUrl(
-//                    "https://firebasestorage.googleapis.com/v0/b/real-gm-caching-97159.appspot.com/o/images%2F")
-//                var useableImage: Bitmap =ContextCompat.getDrawable(requireContext(), R.drawable.image1)!!.toBitmap()
-//                pathReference.child(image!!).getBytes(1024*1024).addOnSuccessListener {
-//                    useableImage=BitmapFactory.decodeByteArray(it,0,it.size)
-////            useableImage=ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
-//
-//                }.addOnFailureListener {
-//                    useableImage=ContextCompat.getDrawable(requireContext(), R.drawable.image2)!!.toBitmap()
-//                }
-//                return useableImage
-//            }
+
 
 
             override fun onCancelled(error: DatabaseError) {

@@ -11,10 +11,11 @@ class Cache{
     var cacheName: String? =null
     var lat: Double =0.0
     var lng: Double=0.0
-    var image : String?=null
+    var image : String="null"
+    var found : Boolean = false
 
     constructor(){}
-    constructor(cacheid: String,creatorid: String?,cacheName: String?,lat: Double,lng: Double,image : String?){
+    constructor(cacheid: String,creatorid: String?,cacheName: String?,lat: Double,lng: Double,image : String){
         this.cacheid=cacheid
         this.creatorid=creatorid
         this.cacheName=cacheName
@@ -22,7 +23,7 @@ class Cache{
         this.lng=lng
         this.image=image
     }
-    constructor(creatorid: String?,cacheName: String?,lat: Double,lng: Double,image : String?){
+    constructor(creatorid: String?,cacheName: String?,lat: Double,lng: Double,image : String){
 
         this.creatorid=creatorid
         this.cacheName=cacheName

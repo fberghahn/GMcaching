@@ -45,7 +45,7 @@ class CacheDao (){
     }
 
     @WorkerThread
-    suspend fun insert(cache : Cache): Boolean {
+     fun insert(cache : Cache) {
 
 
         val cache=Cache(databaseRef.push().key!!,cache.creatorid,cache.cacheName,cache.lat,cache.lng ,cache.image)
@@ -56,9 +56,45 @@ class CacheDao (){
             isInsertSuccess=false
 
         }
-        return isInsertSuccess
 
     }
+
+    @WorkerThread
+    fun update(cache : Cache) {
+        databaseRef.child("Cache").child(cache.cacheid).setValue(cache).addOnCompleteListener{
+            isInsertSuccess=true
+
+        }.addOnFailureListener{
+            isInsertSuccess=false
+
+        }
+
+    }
+    @WorkerThread
+    suspend fun setFoundTrue(cacheId : String) {
+
+
+
+        databaseRef.child("Cache").child(cacheId).addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children)
+                {
+                    val currentCache=postSnapshot.getValue(Cache::class.java)
+                    if (currentCache?.cacheid==cacheId){
+                        currentCache.found=true
+                        insert(currentCache)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteAll() {

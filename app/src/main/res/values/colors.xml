@@ -10,6 +10,7 @@
     <color name="emerald_green">#01573A</color>
     <color name="darker_green">#012A21</color>
     <color name="buttonLabel">#FFFFFF</color>
+    <color name="gray_color_scheme">#7F8A8989</color>
 
 
 </resources>
