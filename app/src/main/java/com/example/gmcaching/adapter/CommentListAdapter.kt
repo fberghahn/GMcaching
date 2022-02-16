@@ -39,6 +39,7 @@ class CommentListAdapter ( private val dataset: ArrayList<Comment>) : RecyclerVi
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: CommentListAdapter.CommentViewHolder, position: Int) {
+        dataset.reverse()
         val current = dataset[position]
 
             holder.bind(current.comment)

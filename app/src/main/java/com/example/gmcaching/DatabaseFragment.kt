@@ -74,6 +74,7 @@ class DatabaseFragment : Fragment() {
         recyclerView = binding.recyclerview
         recyclerView.adapter=adapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+
         loadDataFromServer()
 
 
@@ -94,6 +95,9 @@ class DatabaseFragment : Fragment() {
         val databaseRef = FirebaseDatabase.getInstance("https://real-gm-caching-97159-default-rtdb.europe-west1.firebasedatabase.app").reference
         databaseRef.child("Cache").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                binding.checkInternetStatus.visibility=View.GONE
+                binding.progressBarInList.visibility=View.GONE
+                binding.fab.visibility = View.VISIBLE
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 myDataset.clear()

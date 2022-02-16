@@ -12,18 +12,44 @@
         android:layout_height="match_parent"
         tools:context=".DatabaseFragment">
 
+        <ProgressBar
+            android:id="@+id/progressBarInList"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerview"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerview"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/recyclerview_item"
-        android:padding="@dimen/big_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+
+        <TextView
+            android:id="@+id/check_internet_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Check Wifi Connection"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FFFFFF"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerview"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerview"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview"
+            app:layout_constraintTop_toTopOf="@+id/recyclerview"
+            app:layout_constraintVertical_bias="0.425"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/big_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/recyclerview_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -32,6 +58,7 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/add_word"
             android:src="@drawable/ic_baseline_add_24"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.954"
             app:layout_constraintLeft_toLeftOf="parent"

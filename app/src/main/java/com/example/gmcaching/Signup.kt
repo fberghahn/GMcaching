@@ -21,9 +21,9 @@ class Signup : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-        val firebaseapp : FirebaseApp = FirebaseApp.getInstance( )
 
-        mAuth = FirebaseAuth.getInstance(firebaseapp)
+
+        mAuth = FirebaseAuth.getInstance()
         username = findViewById(R.id.sign_username)
         logemail = findViewById(R.id.sign_Email)
         logpasswort = findViewById(R.id.sign_passwort)

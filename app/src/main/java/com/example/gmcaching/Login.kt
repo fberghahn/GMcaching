@@ -24,9 +24,9 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val firebaseapp : FirebaseApp = FirebaseApp.getInstance()
 
-        mAuth = FirebaseAuth.getInstance( firebaseapp)
+
+        mAuth = FirebaseAuth.getInstance( )
         logemail = findViewById(R.id.log_Email)
         logpasswort = findViewById(R.id.log_passwort)
         btnlogin = findViewById(R.id.button_login)

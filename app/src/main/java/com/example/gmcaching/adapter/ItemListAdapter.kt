@@ -27,7 +27,7 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
          val wordItemView: TextView = itemView.findViewById(R.id.item_title)
          val imageItemView: ImageView = itemView.findViewById(R.id.item_image)
         val imagenotfoundtextview : TextView=itemView.findViewById(R.id.imagenotfound)
-        val progressbar  = itemView.findViewById(R.id.progressBar) as ProgressBar
+        val progressbar  = itemView.findViewById(R.id.progressBarInList) as ProgressBar
         fun bind(text: String?) {
             wordItemView.text = text
         }
@@ -63,12 +63,30 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
         }
 
         holder.imageItemView.setOnClickListener{
-            val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!!,current.cacheid!!, current.creatorid!!,current.image!!)
-            holder.itemView.findNavController().navigate(action)
+            if (!current.found) {
+                val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(
+                    lat = current.lat.toString(),
+                    lng = current.lng.toString(),
+                    current.cacheName!!,
+                    current.cacheid!!,
+                    current.creatorid!!,
+                    current.image!!
+                )
+                holder.itemView.findNavController().navigate(action)
+            }
         }
         holder.showOnMapButton.setOnClickListener{
-            val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(lat = current.lat.toString(), lng = current.lng.toString(), current.cacheName!!,current.cacheid!!,current.creatorid!!,current.image!! )
-            holder.itemView.findNavController().navigate(action)
+            if (!current.found) {
+                val action = DatabaseFragmentDirections.actionDatabaseFragmentToMapsFragment(
+                    lat = current.lat.toString(),
+                    lng = current.lng.toString(),
+                    current.cacheName!!,
+                    current.cacheid!!,
+                    current.creatorid!!,
+                    current.image!!
+                )
+                holder.itemView.findNavController().navigate(action)
+            }
         }
         holder.commentButton.setOnClickListener{
             val action = DatabaseFragmentDirections.actionDatabaseFragmentToCommentFragment(current.cacheid, current.cacheName!!)

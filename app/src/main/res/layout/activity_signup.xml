@@ -39,10 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sign_Email"
-        android:layout_marginTop="10dp"
-        android:hint="Passwort"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:hint="Passwort"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/button_signup2"
