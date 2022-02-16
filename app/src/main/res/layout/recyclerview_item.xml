@@ -24,6 +24,16 @@
             android:scaleType="centerCrop"
             tools:srcCompat="@drawable/image1" />
 
+        <TextView
+            android:id="@+id/imagenotfound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Image Not Found"
+            android:textColor="#FFFFFF"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"

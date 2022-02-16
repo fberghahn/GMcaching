@@ -25,6 +25,7 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
         val commentButton = itemView.findViewById<ImageButton>(R.id.button_comment)
          val wordItemView: TextView = itemView.findViewById(R.id.item_title)
          val imageItemView: ImageView = itemView.findViewById(R.id.item_image)
+        val imagenotfoundtextview : TextView=itemView.findViewById(R.id.imagenotfound)
         val progressbar  = itemView.findViewById(R.id.progressBar) as ProgressBar
         fun bind(text: String?) {
             wordItemView.text = text
@@ -51,9 +52,6 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
         if (current.image!=null){
             getImage(current.image, holder)
 
-
-
-
         }else{
             holder.imageItemView.setImageResource(image1)
             holder.progressbar.visibility = View.GONE
@@ -79,9 +77,11 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
         val pathReference = storage.child("images/")
         var usableImage: Bitmap =ContextCompat.getDrawable(context, image1)!!.toBitmap()
 
-        pathReference.child(image!!).getBytes(1024*1024).addOnSuccessListener {
+        pathReference.child(image!!).getBytes(1024*1024*3).addOnSuccessListener {
            holder.imageItemView.setImageBitmap( BitmapFactory.decodeByteArray(it,0,it.size))
             holder.progressbar.visibility = View.GONE
+            holder.imagenotfoundtextview.visibility=View.GONE
+
 //           imagesave=ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
 
 
@@ -89,6 +89,7 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
         }.addOnFailureListener {
             holder.imageItemView.setImageBitmap(usableImage)
             holder.progressbar.visibility = View.GONE
+            holder.imagenotfoundtextview.visibility=View.VISIBLE
 
         }
 

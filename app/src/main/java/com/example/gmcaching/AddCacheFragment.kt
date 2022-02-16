@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
@@ -23,7 +22,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.drawToBitmap
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.gmcaching.data.Cache
@@ -32,7 +30,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.net.URI
 import java.util.*
 
 
@@ -46,8 +43,7 @@ class AddCacheFragment : Fragment() {
 
     private var newLat :Double =0.0
     private var newLng :Double =0.0
-    private var captureimage: Bitmap? =null
-    private var byteArray: ByteArray? =null
+    private var cacheImageUri : Uri? =null
     private val newCacheActivityRequestCode = 10001
     private val newCameraActivityRequestCode = 10002
     private val newGalleryActivityRequestCode=10003
@@ -129,7 +125,7 @@ class AddCacheFragment : Fragment() {
             }else {
                 //zu db hinzufügen
                  //Mit custom image
-                if (captureimage!=null) {
+                if (cacheImageUri!=null) {
                     val imageid = uploadImage()
                     val cache = Cache(
                         creatorid = "noch nicht implementiert",
@@ -181,19 +177,15 @@ class AddCacheFragment : Fragment() {
 
     private fun handleOrientationChange(savedInstanceState: Bundle?) {
         if (savedInstanceState!=null) {
-            val lat=savedInstanceState.getDouble("lat")
-            val lng=savedInstanceState.getDouble("lat")
-            captureimage=savedInstanceState.getParcelable("imageUri")
-            if (captureimage!=null) {
-                binding.userImageView.setImageBitmap(captureimage)
+             newLat=savedInstanceState.getDouble("lat")
+             newLng=savedInstanceState.getDouble("lat")
+            cacheImageUri=Uri.parse(savedInstanceState.getString("imageUri"))
+            if (cacheImageUri!=null) {
+                binding.userImageView.setImageURI(cacheImageUri)
                 binding.infoStandardbild.text = "Dein Bild"
 
             }
-            if (lat!=0.0&&lng!=0.0)
-            {
-                newLng=lng
-                newLat=lat
-            }
+
 
         }
     }
@@ -202,10 +194,11 @@ class AddCacheFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode==newCameraActivityRequestCode)
         {
-             val cameraImageUri= data?.extras?.get("data") as Bitmap?
-            if (cameraImageUri!=null)
-                captureimage= cameraImageUri
-            binding.userImageView.setImageBitmap(cameraImageUri)
+             val cameraImageBitmap= data?.extras?.get("data") as Bitmap?
+            if (cameraImageBitmap!=null)
+                cacheImageUri= Uri.parse(MediaStore.Images.Media.insertImage(context?.contentResolver,cameraImageBitmap,UUID.randomUUID().toString(),"Image Taken in GMCaching"))
+            binding.userImageView.setImageURI(cacheImageUri)
+//            binding.userImageView.setImageBitmap(cameraImageBitmap)
             binding.infoStandardbild.text="Dein Bild"
 
         }
@@ -214,8 +207,8 @@ class AddCacheFragment : Fragment() {
         {
             val galleryURI= data?.data
             if (galleryURI!=null)
-                captureimage=MediaStore.Images.Media.getBitmap(this.context?.contentResolver,galleryURI)
-                binding.userImageView.setImageBitmap(captureimage)
+                cacheImageUri=galleryURI
+                binding.userImageView.setImageURI(galleryURI)
             binding.infoStandardbild.text="Dein Bild"
         }
 
@@ -245,7 +238,7 @@ class AddCacheFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable("imageUri",captureimage )
+        outState.putString("imageUri",cacheImageUri.toString() )
         outState.putDouble("lat",newLat)
         outState.putDouble("lng",newLng)
     }
@@ -330,11 +323,6 @@ class AddCacheFragment : Fragment() {
 
     private fun uploadImage():String?{
 
-        val stream = ByteArrayOutputStream()
-        captureimage?.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        byteArray = stream.toByteArray()
-
-
         val progressDialog = ProgressDialog(this.requireContext())
         progressDialog.setTitle("Uploading Image...")
         val storage = FirebaseStorage.getInstance()
@@ -343,10 +331,10 @@ class AddCacheFragment : Fragment() {
 
         // Create a reference to "mountains.jpg"
 
-// Create a reference to 'images/mountains.jpg'
+// Create a reference to 'images/imagekey'
         val mountainImagesRef = storageReference.child("images/"+randomkey)
 
-        byteArray?.let { mountainImagesRef.putBytes(it).addOnSuccessListener {
+        cacheImageUri?.let { mountainImagesRef.putFile(it!!).addOnSuccessListener {
             Toast.makeText(
                 this.requireContext(),
                 "Bild Erfolgreich hochgeladen",
