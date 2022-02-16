@@ -86,7 +86,7 @@ class ItemListAdapter( private val context: Context ,private val dataset: ArrayL
            holder.imageItemView.setImageBitmap( BitmapFactory.decodeByteArray(it,0,it.size))
             holder.progressbar.visibility = View.GONE
             holder.imagenotfoundtextview.visibility=View.GONE
-           notifyDataSetChanged()
+
 
 //           imagesave=ContextCompat.getDrawable(context, R.drawable.image2)!!.toBitmap()
 

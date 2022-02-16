@@ -90,6 +90,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener, OnMapReadyCall
         found_button.setOnClickListener{
             val currentCache = Cache(cacheid,creatorid,title,cacheLocation.latitude,cacheLocation.longitude,imageString)
             currentCache.found=true
+            currentCache.cacheName= currentCache.cacheName+" (Gefunden)"
             sharedViewModel.updateCache(currentCache)
 
             val action = MapsFragmentDirections.actionMapsFragmentToDatabaseFragment()

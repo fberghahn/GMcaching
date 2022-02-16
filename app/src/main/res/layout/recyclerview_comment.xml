@@ -14,24 +14,51 @@
 
         <LinearLayout
 
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textSize="15sp"
-                tools:text="Stefan" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/big_padding">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/myCardView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    app:cardCornerRadius="50dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitStart"
+                        app:srcCompat="@drawable/defaultavatar" />
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textSize="15sp"
+                    tools:text="Stefan" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="@dimen/big_padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 tools:text="huete hatte ich dasnACH gesucht, aber leider garnichts gefunden... echt ziemlich traurig" />
 
