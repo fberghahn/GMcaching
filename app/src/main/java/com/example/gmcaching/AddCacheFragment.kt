@@ -266,17 +266,20 @@ class AddCacheFragment : Fragment() {
     @SuppressLint("MissingPermission")
     private fun updateLocation(){
         val locationmanager =  this.requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationRequest: LocationRequest =
+            LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10000)
+                .setFastestInterval(1000)
+                .setNumUpdates(1)
+
         if (locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationmanager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER))
+
         {
             fusedLocationClient.flushLocations()
             fusedLocationClient.lastLocation.addOnCompleteListener {
 
-                val locationRequest: LocationRequest =
-                    LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                        .setInterval(10000)
-                        .setFastestInterval(1000)
-                        .setNumUpdates(1)
+
                 locationCallback = object : LocationCallback() {
                     override fun onLocationResult(locationResult: LocationResult) {
                         super.onLocationResult(locationResult)
@@ -294,6 +297,8 @@ class AddCacheFragment : Fragment() {
                 )
 
             }
+
+
         }
         else{
             Toast.makeText(
