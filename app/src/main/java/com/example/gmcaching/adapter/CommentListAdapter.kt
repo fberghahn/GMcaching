@@ -1,21 +1,17 @@
 package com.example.gmcaching.adapter
 
-import android.net.Uri
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gmcaching.R
 import com.example.gmcaching.data.Comment
 
-class CommentListAdapter ( private val dataset: ArrayList<Comment>) : RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>() {
+class CommentListAdapter(private val dataset: ArrayList<Comment>) :
+    RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>() {
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val commentItemView: TextView = itemView.findViewById(R.id.comment)
+        private val commentItemView: TextView = itemView.findViewById(R.id.comment)
         val creatorItemView: TextView = itemView.findViewById(R.id.username)
         fun bind(text: String?) {
             commentItemView.text = text
@@ -34,35 +30,18 @@ class CommentListAdapter ( private val dataset: ArrayList<Comment>) : RecyclerVi
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CommentListAdapter.CommentViewHolder {
-        return CommentListAdapter.CommentViewHolder.create(parent)
+    ): CommentViewHolder {
+        return CommentViewHolder.create(parent)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onBindViewHolder(holder: CommentListAdapter.CommentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         dataset.reverse()
         val current = dataset[position]
 
-            holder.bind(current.comment)
-            holder.creatorItemView.text = current.creatorname
+        holder.bind(current.comment)
+        holder.creatorItemView.text = current.creatorname
 
 
-//            holder.itemView.visibility=View.GONE
-            //Recyclerview resetten
-
-    }
-
-
-
-
-    class WordsComparator : DiffUtil.ItemCallback<Comment>() {
-        override fun areItemsTheSame(oldComment: Comment, newComment: Comment): Boolean {
-            return oldComment === newComment
-        }
-
-        override fun areContentsTheSame(oldComment: Comment, newComment: Comment): Boolean {
-            return oldComment.comment == newComment.comment
-        }
     }
 
     override fun getItemCount(): Int {

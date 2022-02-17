@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/databaseFragment">
+    app:startDestination="@id/cacheListFragment">
 
     <fragment
         android:id="@+id/mapsFragment"
@@ -30,7 +30,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_mapsFragment_to_databaseFragment"
-            app:destination="@id/databaseFragment" />
+            app:destination="@id/cacheListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCacheFragment"
@@ -38,31 +38,22 @@
         android:label="@string/new_cache"
         tools:layout="@layout/add_cache_fragment">
         <action
-            android:id="@+id/action_addCacheFragment_to_databaseFragment"
-            app:destination="@id/databaseFragment" />
-        <action
-            android:id="@+id/action_addCacheFragment_to_databaseFragment2"
-            app:destination="@id/databaseFragment"
-            app:launchSingleTop="false"
-            app:popUpToInclusive="false">
-            <argument
-                android:name="text_is_ready"
-                android:defaultValue="false" />
-        </action>
+            android:id="@+id/action_addCacheFragment_to_cacheListFragment"
+            app:destination="@id/cacheListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/databaseFragment"
-        android:name="com.example.gmcaching.DatabaseFragment"
+        android:id="@+id/cacheListFragment"
+        android:name="com.example.gmcaching.CacheListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/database_fragment">
+        tools:layout="@layout/cache_list_fragment">
         <action
-            android:id="@+id/action_databaseFragment_to_addCacheFragment"
+            android:id="@+id/action_cacheListFragment_to_addCacheFragment"
             app:destination="@id/addCacheFragment" />
         <action
-            android:id="@+id/action_databaseFragment_to_mapsFragment"
+            android:id="@+id/action_cacheListFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
         <action
-            android:id="@+id/action_databaseFragment_to_commentFragment"
+            android:id="@+id/action_cacheListFragment_to_commentFragment"
             app:destination="@id/commentFragment" />
     </fragment>
     <fragment

@@ -2,7 +2,6 @@ package com.example.gmcaching
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,10 +25,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.gmcaching.data.Cache
 import com.example.gmcaching.databinding.AddCacheFragmentBinding
+import com.example.gmcaching.model.SharedViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.storage.FirebaseStorage
-import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -49,20 +48,15 @@ class AddCacheFragment : Fragment() {
     private val newGalleryActivityRequestCode=10003
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
-    private val sharedViewModel: ItemViewModel by viewModels {
-        ItemViewModel.WordViewModelFactory()
+    private val sharedViewModel: SharedViewModel by viewModels {
+        SharedViewModel.SharedViewModelFactory()
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = AddCacheFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -93,7 +87,7 @@ class AddCacheFragment : Fragment() {
         binding.buttonGallery.setOnClickListener {
             checkCameraPermissions()
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
-            galleryIntent.setType("image/")
+            galleryIntent.type = "image/"
             startActivityForResult(Intent.createChooser(galleryIntent,"Title"),newGalleryActivityRequestCode)
         }
 
@@ -106,7 +100,7 @@ class AddCacheFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                val action = AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment()
+                val action = AddCacheFragmentDirections.actionAddCacheFragmentToCacheListFragment()
                 findNavController().navigate(action)
 
             }
@@ -119,7 +113,7 @@ class AddCacheFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
 
-                val action = AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment()
+                val action = AddCacheFragmentDirections.actionAddCacheFragmentToCacheListFragment()
                 findNavController().navigate(action)
 
             }else {
@@ -128,7 +122,7 @@ class AddCacheFragment : Fragment() {
                 if (cacheImageUri!=null) {
                     val imageid = uploadImage()
                     val cache = Cache(
-                        creatorid = "noch nicht implementiert",
+                        creatorid = "",
                         cacheName = binding.editName.text.toString(),
                         lat = newLat,
                         lng = newLng,
@@ -144,7 +138,7 @@ class AddCacheFragment : Fragment() {
 
 
                     val action =
-                        AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment()
+                        AddCacheFragmentDirections.actionAddCacheFragmentToCacheListFragment()
                     findNavController().navigate(action)
 
                 }
@@ -152,7 +146,7 @@ class AddCacheFragment : Fragment() {
                 else{
 
                     val cache = Cache(
-                        creatorid = "noch nicht implementiert",
+                        creatorid = "",
                         cacheName = binding.editName.text.toString(),
                         lat = newLat,
                         lng = newLng,
@@ -168,7 +162,7 @@ class AddCacheFragment : Fragment() {
 
 
                     val action =
-                        AddCacheFragmentDirections.actionAddCacheFragmentToDatabaseFragment()
+                        AddCacheFragmentDirections.actionAddCacheFragmentToCacheListFragment()
                     findNavController().navigate(action)
                 }
             }
@@ -182,7 +176,7 @@ class AddCacheFragment : Fragment() {
             cacheImageUri=Uri.parse(savedInstanceState.getString("imageUri"))
             if (cacheImageUri!=null) {
                 binding.userImageView.setImageURI(cacheImageUri)
-                binding.infoStandardbild.text = "Dein Bild"
+                binding.infoStandardbild.text = getString(R.string.your_Image)
 
             }
 
@@ -198,8 +192,7 @@ class AddCacheFragment : Fragment() {
             if (cameraImageBitmap!=null)
                 cacheImageUri= Uri.parse(MediaStore.Images.Media.insertImage(context?.contentResolver,cameraImageBitmap,UUID.randomUUID().toString(),"Image Taken in GMCaching"))
             binding.userImageView.setImageURI(cacheImageUri)
-//            binding.userImageView.setImageBitmap(cameraImageBitmap)
-            binding.infoStandardbild.text="Dein Bild"
+            binding.infoStandardbild.text=getString(R.string.your_Image)
 
         }
 
@@ -209,7 +202,7 @@ class AddCacheFragment : Fragment() {
             if (galleryURI!=null)
                 cacheImageUri=galleryURI
                 binding.userImageView.setImageURI(galleryURI)
-            binding.infoStandardbild.text="Dein Bild"
+            binding.infoStandardbild.text=getString(R.string.your_Image)
         }
 
 
@@ -223,7 +216,6 @@ class AddCacheFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode==newCacheActivityRequestCode&& grantResults.isNotEmpty()&&(grantResults[0]+grantResults[1] == PackageManager.PERMISSION_GRANTED))
         {
-            updateLocation()
         }
         else
         {
@@ -278,27 +270,30 @@ class AddCacheFragment : Fragment() {
                 LocationManager.NETWORK_PROVIDER))
         {
             fusedLocationClient.flushLocations()
-            fusedLocationClient.lastLocation.addOnCompleteListener(OnCompleteListener { task ->
+            fusedLocationClient.lastLocation.addOnCompleteListener {
 
-                    val locationRequest : LocationRequest = LocationRequest().
-                    setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                val locationRequest: LocationRequest =
+                    LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                         .setInterval(10000)
                         .setFastestInterval(1000)
                         .setNumUpdates(1)
-                    locationCallback = object : LocationCallback() {
-                        override fun onLocationResult(locationResult: LocationResult) {
-                            super.onLocationResult(locationResult)
+                locationCallback = object : LocationCallback() {
+                    override fun onLocationResult(locationResult: LocationResult) {
+                        super.onLocationResult(locationResult)
 
-                            val location : Location = locationResult.lastLocation
-                            newLat=locationResult.lastLocation.latitude
-                            newLng=locationResult.lastLocation.longitude
+                        newLat = locationResult.lastLocation.latitude
+                        newLng = locationResult.lastLocation.longitude
 
 
-                        }
                     }
-                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper()!!)
+                }
+                fusedLocationClient.requestLocationUpdates(
+                    locationRequest,
+                    locationCallback,
+                    Looper.myLooper()!!
+                )
 
-            })
+            }
         }
         else{
             Toast.makeText(
@@ -323,37 +318,30 @@ class AddCacheFragment : Fragment() {
 
     private fun uploadImage():String{
 
-        val progressDialog = ProgressDialog(this.requireContext())
-        progressDialog.setTitle("Uploading Image...")
         val storage = FirebaseStorage.getInstance("gs://real-gm-caching-97159.appspot.com/")
         val storageReference = storage.reference
-        var randomkey :String= UUID.randomUUID().toString()
+        var imageKey :String= UUID.randomUUID().toString()
 
-        // Create a reference to "mountains.jpg"
+
 
 // Create a reference to 'images/imagekey'
-        val mountainImagesRef = storageReference.child("images/"+randomkey)
+        val imageRef = storageReference.child("images/"+imageKey)
 
-        cacheImageUri?.let { mountainImagesRef.putFile(it!!).addOnSuccessListener {
+        cacheImageUri?.let { imageRef.putFile(it).addOnSuccessListener {
             Toast.makeText(
                 this.requireContext(),
                 "Bild Erfolgreich hochgeladen",
                 Toast.LENGTH_SHORT
             ).show()
-            progressDialog.dismiss()
         }.addOnFailureListener{
             Toast.makeText(
                 this.requireContext(),
                 "Fehler, Bild nicht hochgeladen",
                 Toast.LENGTH_SHORT
             ).show()
-            randomkey="null"
-            progressDialog.dismiss()
-        }.addOnProgressListener {
-            val progresspercentage = 100*it.bytesTransferred/it.totalByteCount
-            progressDialog.setMessage("Percentage: "+progresspercentage.toString()+"%")
+            imageKey="null"
         } }
-        return randomkey
+        return imageKey
     }
 
 

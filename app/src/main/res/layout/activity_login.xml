@@ -12,6 +12,7 @@
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
+        android:contentDescription="@string/logo"
         android:src="@drawable/berg" />
 
     <EditText
@@ -19,10 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
-        android:layout_marginTop="10dp"
-        android:hint="Email"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/email"
+        android:inputType="textAutoComplete|textEmailAddress"
+        tools:ignore="TouchTargetSizeCheck"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/log_passwort"
@@ -32,15 +36,17 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="Passwort"
-        android:inputType="textPassword" />
+        android:hint="@string/passwort"
+        android:inputType="textPassword"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+        android:importantForAutofill="no" />
     <Button
         android:id="@+id/button_login"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/log_passwort"
-        android:text="Log in"
+        android:text="@string/log_in"
         android:layout_marginTop="15dp"/>
 
     <Button
@@ -49,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/button_login"
-        android:text="Sign UP"
+        android:text="@string/sign_up"
         android:layout_marginTop="10dp"/>
 
 

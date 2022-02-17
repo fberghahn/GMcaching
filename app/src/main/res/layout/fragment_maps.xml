@@ -23,11 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Gefunden?"
+        android:text="@string/gefunden"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    /androidx.fragment.app.FragmentContainerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

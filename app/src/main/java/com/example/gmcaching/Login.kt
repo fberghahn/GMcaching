@@ -1,15 +1,12 @@
 package com.example.gmcaching
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.FirebaseApp
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 class Login : AppCompatActivity() {
 
@@ -26,7 +23,7 @@ class Login : AppCompatActivity() {
 
 
 
-        mAuth = FirebaseAuth.getInstance( )
+        mAuth = FirebaseAuth.getInstance()
         logemail = findViewById(R.id.log_Email)
         logpasswort = findViewById(R.id.log_passwort)
         btnlogin = findViewById(R.id.button_login)
@@ -38,27 +35,29 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
         btnlogin.setOnClickListener {
-            if (logemail.text.isNotEmpty()&&logpasswort.text.isNotEmpty()){
-            val email = logemail.text.toString()
-            val password = logpasswort.text.toString()
+            if (logemail.text.isNotEmpty() && logpasswort.text.isNotEmpty()) {
+                val email = logemail.text.toString()
+                val password = logpasswort.text.toString()
 
-            login(email, password)
-        }}
+                login(email, password)
+            }
+        }
     }
 
-    private fun login(email:String, password:String){
-        //Logik für User einloggen
+    private fun login(email: String, password: String) {
+        //Logik für User login
 
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    val intent = Intent(this@Login, MainActivity::class.java )
+                    val intent = Intent(this@Login, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(this@Login, "Email/Passwort nicht Gefunden", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login, getString(R.string.password_email_wrong), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 

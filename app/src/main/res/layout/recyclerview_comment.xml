@@ -29,16 +29,16 @@
                     android:id="@+id/profileimage_card"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
                     app:cardCornerRadius="50dp">
 
                     <ImageView
                         android:id="@+id/profileImageView"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:contentDescription="@string/profileimage"
                         android:scaleType="fitStart"
-                        app:srcCompat="@drawable/defaultavatar" />
+                        app:srcCompat="@drawable/defaultavatar"
+                        tools:ignore="ImageContrastCheck" />
                 </androidx.cardview.widget.CardView>
 
 

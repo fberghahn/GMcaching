@@ -12,6 +12,7 @@
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
+        android:contentDescription="@string/default_profile"
         android:src="@drawable/berg" />
 
     <EditText
@@ -19,20 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
-        android:layout_marginTop="10dp"
-        android:hint="Benutzername"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/benutzername"
+        android:importantForAutofill="no"
+        android:inputType="textAutoComplete"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <EditText
         android:id="@+id/sign_Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sign_username"
-        android:layout_marginTop="10dp"
-        android:hint="Email"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/email"
+        android:importantForAutofill="no"
+        android:inputType="textAutoComplete|textEmailAddress"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/sign_passwort"
@@ -42,8 +49,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="Passwort"
-        android:inputType="textPassword" />
+        android:hint="@string/passwort"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profileimage_card"
@@ -58,8 +67,11 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:clickable="true"
+            android:contentDescription="@string/profileimage"
+            android:focusable="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/defaultavatar" />
+            app:srcCompat="@drawable/defaultavatar"
+            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -69,7 +81,7 @@
         android:layout_below="@id/profileimage_card"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Sign UP" />
+        android:text="@string/sign_up" />
 
 
 </RelativeLayout>

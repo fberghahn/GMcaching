@@ -7,9 +7,9 @@
     <string name="cache2">2. Gps Suche</string>
     <string name="cache3">3. Gefunden dank GMcaching</string>
     <string name="cache4">4. Beispiel</string>
-    <string name="hint_name">Name...</string>
+    <string name="hint_name">Name…</string>
     <string name="hint_koordinaten">Mein Standort wird verwendet</string>
-    <string name="hint_suchcounter">Kommentar...</string>
+    <string name="hint_suchcounter">Kommentar…</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="locationError">Word not saved because of Location Error</string>
@@ -20,5 +20,23 @@
     <string name="kommentar">Kommentar</string>
     <string name="kommentar_posten">Kommentar Posten</string>
     <string name="standardbild">Standardbild</string>
+    <string name="your_Image">Dein Bild</string>
+    <string name="password_email_wrong">Email/Passwort nicht Gefunden</string>
+    <string name="email">Email</string>
+    <string name="passwort">Passwort</string>
+    <string name="log_in">Log in</string>
+    <string name="sign_up">Sign UP</string>
+    <string name="logo">Logo</string>
+    <string name="default_profile">default profile</string>
+    <string name="benutzername">Benutzername</string>
+    <string name="profileimage">profileimage</string>
+    <string name="custom_cache_image">custom cache image</string>
+    <string name="camera_icon">camera icon</string>
+    <string name="gallery_icon">gallery icon</string>
+    <string name="logout">Logout</string>
+    <string name="gefunden">Gefunden?</string>
+    <string name="image_not_found">Image Not Found</string>
+    <string name="commentbutton">commentButton</string>
+    <string name="greyscheme_for_found">greyscheme for found</string>
 
 </resources>

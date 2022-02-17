@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Image Not Found"
+                android:text="@string/image_not_found"
                 android:textColor="#FFFFFF"
                 android:visibility="invisible"
                 tools:visibility="visible" />
@@ -59,6 +59,7 @@
             android:layout_height="38dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/commentbutton"
             android:minWidth="32dp"
             android:minHeight="48dp"
             android:scaleType="centerInside"
@@ -83,8 +84,9 @@
             android:id="@+id/greyscheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="@color/gray_color_scheme"
-            android:visibility="gone">
+            android:contentDescription="@string/greyscheme_for_found"
+            android:visibility="gone"
+            app:srcCompat="@color/gray_color_scheme">
 
         </ImageView>
 </FrameLayout>

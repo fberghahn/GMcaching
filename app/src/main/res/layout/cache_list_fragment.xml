@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatabaseFragment">
+    tools:context=".CacheListFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DatabaseFragment">
+        tools:context=".CacheListFragment">
 
         <ProgressBar
             android:id="@+id/progressBarInList"
@@ -35,7 +35,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/recyclerview_item" />
+            tools:listitem="@layout/recyclerview_cache" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -57,7 +57,7 @@
             style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
+            android:text="@string/logout"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/recyclerview"
