@@ -1,10 +1,11 @@
 package com.example.gmcaching.adapter
 
-import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
@@ -43,7 +44,7 @@ class CommentListAdapter ( private val dataset: ArrayList<Comment>) : RecyclerVi
         val current = dataset[position]
 
             holder.bind(current.comment)
-            holder.creatorItemView.text = current.creatorid
+            holder.creatorItemView.text = current.creatorname
 
 
 //            holder.itemView.visibility=View.GONE

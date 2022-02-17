@@ -1,16 +1,7 @@
 package com.example.gmcaching.data
 
-import android.util.Log
 import androidx.annotation.WorkerThread
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.flow.Flow
 
 class CommentDao {
 
@@ -48,7 +39,7 @@ class CommentDao {
         suspend fun insert(comment: Comment): Boolean {
 
 
-                val comment=Comment(databaseRef.push().key!!,comment.creatorid, comment.cacheid!!, comment.comment, comment.cachename)
+                val comment=Comment(databaseRef.push().key!!,comment.creatorname, comment.cacheid!!, comment.comment, comment.cachename)
                 databaseRef.child("Comment").child(comment.commentid).setValue(comment).addOnCompleteListener{
                         isInsertSuccess=true
 

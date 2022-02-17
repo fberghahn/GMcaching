@@ -16,6 +16,7 @@ import com.example.gmcaching.adapter.CommentListAdapter
 import com.example.gmcaching.data.Cache
 import com.example.gmcaching.data.Comment
 import com.example.gmcaching.databinding.CommentFragmentBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -29,6 +30,7 @@ class CommentFragment : Fragment() {
     private var _binding : CommentFragmentBinding?= null//??
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
+    private lateinit var mAuth: FirebaseAuth
     private val itemViewModel: ItemViewModel by viewModels {
         ItemViewModel.WordViewModelFactory()
     }
@@ -59,6 +61,7 @@ class CommentFragment : Fragment() {
 
 
         val cacheid = arguments?.let { it.getString("cacheid")}
+        mAuth = FirebaseAuth.getInstance()
 
         myDataset=ArrayList<Comment>()
 
@@ -86,6 +89,10 @@ class CommentFragment : Fragment() {
 //            val thiscache = itemViewModel.findeItemByID(id!!).asLiveData()
 //            val comment =  Comment(cachename = thiscache.value!!.cacheName, cacheID = thiscache.value!!.id, comment = binding.buttonSaveComment.toString())
             val comment =  Comment(cachename = name!!, cacheid = id!!, comment = binding.editComment.text.toString())
+            mAuth.currentUser?.let { user ->
+                comment.creatorname=user.displayName
+
+            }
             if (comment != null&&comment.cacheid!="-1"&&comment.cachename!="null") {
                 itemViewModel.insertComment(comment)
                 binding.editComment.text.clear()

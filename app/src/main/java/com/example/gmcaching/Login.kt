@@ -31,30 +31,34 @@ class Login : AppCompatActivity() {
         logpasswort = findViewById(R.id.log_passwort)
         btnlogin = findViewById(R.id.button_login)
         btnSignup = findViewById(R.id.button_signup)
+        mAuth.signOut()
 
         btnSignup.setOnClickListener {
             val intent = Intent(this@Login, Signup::class.java)
             startActivity(intent)
         }
         btnlogin.setOnClickListener {
+            if (logemail.text.isNotEmpty()&&logpasswort.text.isNotEmpty()){
             val email = logemail.text.toString()
             val password = logpasswort.text.toString()
 
             login(email, password)
-        }
+        }}
     }
 
     private fun login(email:String, password:String){
         //Logik für User einloggen
+
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     val intent = Intent(this@Login, MainActivity::class.java )
                     startActivity(intent)
+                    finish()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(this@Login, "Nutzer nicht gefunden", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login, "Email/Passwort nicht Gefunden", Toast.LENGTH_SHORT).show()
                 }
             }
 
