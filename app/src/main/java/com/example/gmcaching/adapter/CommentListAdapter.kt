@@ -11,7 +11,7 @@ import com.example.gmcaching.data.Comment
 class CommentListAdapter(private val dataset: ArrayList<Comment>) :
     RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>() {
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val commentItemView: TextView = itemView.findViewById(R.id.comment)
+         val commentItemView: TextView = itemView.findViewById(R.id.comment)
         val creatorItemView: TextView = itemView.findViewById(R.id.username)
         fun bind(text: String?) {
             commentItemView.text = text
@@ -35,14 +35,14 @@ class CommentListAdapter(private val dataset: ArrayList<Comment>) :
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        dataset.reverse()
         val current = dataset[position]
 
-        holder.bind(current.comment)
+        holder.commentItemView.text=current.comment
         holder.creatorItemView.text = current.creatorname
 
 
     }
+
 
     override fun getItemCount(): Int {
         return dataset.size
